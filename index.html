@@ -33,32 +33,44 @@
                             <span>Home</span>
                         </a>
                         <a data-route="summary" href="{{baseUrl}}summary">
-                            <iron-icon icon="info"></iron-icon>
+                            <iron-icon icon="image:camera"></iron-icon>
                             <span>Summary</span>
                         </a>
+                        <a data-route="pages" href="{{baseUrl}}pages">
+                            <iron-icon icon="content-copy"></iron-icon>
+                            <span>Pages</span>
+                        </a>
                         <a data-route="polymer" href="{{baseUrl}}polymer">
-                            <iron-icon icon="info"></iron-icon>
+                            <iron-icon icon="polymer"></iron-icon>
                             <span>Polymer</span>
                         </a>
+                        <a data-route="components" href="{{baseUrl}}components">
+                            <iron-icon icon="picture-in-picture"></iron-icon>
+                            <span>Custom Components</span>
+                        </a>
+                        <a data-route="libraries" href="{{baseUrl}}libraries">
+                            <iron-icon icon="av:library-books"></iron-icon>
+                            <span>Component Libraries</span>
+                        </a>
                         <a data-route="dom" href="{{baseUrl}}dom">
-                            <iron-icon icon="info"></iron-icon>
-                            <span>Dom</span>
+                            <iron-icon icon="code"></iron-icon>
+                            <span>Dom and Codom</span>
                         </a>
                         <a data-route="styling" href="{{baseUrl}}styling">
-                            <iron-icon icon="info"></iron-icon>
+                            <iron-icon icon="line-style"></iron-icon>
                             <span>Styling</span>
                         </a>
-                        <a data-route="defpage" href="{{baseUrl}}defpage">
-                            <iron-icon icon="info"></iron-icon>
-                            <span>defpage</span>
+                        <a data-route="boot-miraj" href="{{baseUrl}}boot-miraj">
+                            <iron-icon icon="build"></iron-icon>
+                            <span>boot-miraj</span>
                         </a>
-                        <a data-route="defcomponent" href="{{baseUrl}}defcomponent">
-                            <iron-icon icon="info"></iron-icon>
-                            <span>defcomponent</span>
+                        <a data-route="workflow" href="{{baseUrl}}workflow">
+                            <iron-icon icon="refresh"></iron-icon>
+                            <span>Workflow</span>
                         </a>
-                        <a data-route="contact" href="{{baseUrl}}contact">
-                            <iron-icon icon="mail"></iron-icon>
-                            <span>Contact</span>
+                        <a data-route="roadmap" href="{{baseUrl}}roadmap">
+                            <iron-icon icon="maps:my-location"></iron-icon>
+                            <span>roadmap</span>
                         </a>
                     </paper-menu>
                 </paper-scroll-header-panel>
@@ -78,9 +90,52 @@
                     <div class="content">
                         <iron-pages selected="{{route}}" attr-for-selected="data-route">
                             <section tabindex="-1" data-route="home">
-                                <paper-material elevation="1">The goal of the Miraj Project is ...</paper-material>
+                                <h1 tabindex="-1" class="page-title"></h1>
                                 <paper-material elevation="1">
-                                    <p>This is another card.</p>
+                                    <p>The goal of the Miraj Project is to create a
+                pure Clojure, 100% functional programming model for
+                web application development, including first-class
+                support for defining and using <a href="https://www.webcomponents.org/">Web
+                Components</a> (<a href="https://www.polymer-project.org/">Polymer</a>
+                only for trhis version).</p>
+                                    <p>That means two things: support for programming
+                each of the three web languages (HTML, Javascript,
+                CSS) in Clojure, and shielding the programmer from
+                low-level details like configuring the &lt;head&gt; element
+                of a webpage, configuring custom elements, etc.</p>
+                                </paper-material>
+                                <paper-material elevation="1">
+                                    <p>Miraj treats the three "native" languages of
+                web development (HTML, Javascript, CSS) as a kind of
+                web "assembly" language.  The programmer defines
+                pages and components in Clojure (including
+                Clojurescript), which Miraj translates into HTML,
+                Javascript, and CSS.</p>
+                                    <p>Clojurescript already eliminates the need to
+                program in Javascript; Miraj does the same for
+                HTML.  (A genuine Clojure face for CSS programming
+                remains a future project).</p>
+                                    <p>Providing Clojure functions for HTML elements is
+                relatively trivial.  Things get a little more
+                complicated when you add web components, however.
+                Miraj allows the programmer to define and use
+                Polymer-based components in idiomatic Clojure, without
+                having to worry about the directory structures, file
+                names, and href values required to make the generated
+                HTML, Javascript and CSS files work together.</p>
+                                </paper-material>
+                                <paper-material elevation="1">
+                                    <p>Miraj also makes it very easy to define and
+                share component libraries.  Multiple components may be
+                defined across multiple namespaces;
+                a <code>deflibrary</code> macro then assembles any
+                combination of components into a library namespace,
+                which is independent of the defining namespaces.
+                Miraj can automatically generate a demo page for
+                previewing/testing components under development.</p>
+                                    <p>Components can also be easily defined as one-off
+                elements for use in a single page.  Both page and
+                components can be defined in the same project.</p>
                                 </paper-material>
                             </section>
                             <section tabindex="-1" data-route="summary">
@@ -129,47 +184,80 @@
                                         </li>
                                     </ul>
                                 </paper-material>
+                                <paper-material elevation="1">
+                                    <h3>Styling</h3>
+                                    <p>Miraj supports special syntax for inline styles:</p>
+                                    <ul>
+                                        <li>
+                                            <code>(h/span {:miraj.style/color "blue"} "Hello World")<pre>=&gt; <code class="html">&lt;span style="color:blue;"&gt;Hello World&lt;/span&gt;</code>
+                                                </pre>
+                                            </code>
+                                        </li>
+                                    </ul>
+                                    <p>Pseudo-classes and -elements are supported:<span id="hover-eg"> Hello World</span>
+                                        <style>#hover-eg:hover {color:red}</style>
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            <code class="clojure">(h/span :#foo {:miraj.style/hover {:color "red"} "Hello World")</code>
+                                            <pre>=&gt; <code class="html">&lt;span id="foo"&gt;Hello World&lt;/span&gt;&lt;style&gt;#foo:hover {color:red;}&lt;/style&gt;</code>
+                                            </pre>
+                                        </li>
+                                    </ul>
+                                </paper-material>
+                            </section>
+                            <section tabindex="-1" data-route="pages">
+                                <h1 tabindex="-1" class="page-title">Pages</h1>
+                                <paper-material elevation="1">
+                                    <p>This is the pages section</p>
+                                </paper-material>
                             </section>
                             <section tabindex="-1" data-route="polymer">
-                                <paper-material elevation="1" class="polymer">
-                                    <h1 tabindex="-1" class="page-title">Polymer</h1>
+                                <h1 tabindex="-1" class="page-title">Polymer</h1>
+                                <paper-material elevation="1">
                                     <p>...examples..</p>
                                 </paper-material>
                             </section>
-                            <section tabindex="-1" data-route="dom">
+                            <section tabindex="-1" data-route="components">
+                                <h1 tabindex="-1" class="page-title">Custom Components</h1>
                                 <paper-material elevation="1">
-                                    <h1 tabindex="-1" class="page-title">Dom</h1>
+                                    <p>This is the components section</p>
+                                </paper-material>
+                            </section>
+                            <section tabindex="-1" data-route="libraries">
+                                <h1 tabindex="-1" class="page-title">Component Libraries</h1>
+                                <paper-material elevation="1">
+                                    <p>This is the component libraries section</p>
+                                </paper-material>
+                            </section>
+                            <section tabindex="-1" data-route="dom">
+                                <h1 tabindex="-1" class="page-title">Dom</h1>
+                                <paper-material elevation="1">
                                     <p>This is the dom section</p>
                                 </paper-material>
                             </section>
-                            <section tabindex="-1" data-route="defpage">
-                                <paper-material elevation="1">
-                                    <h1 tabindex="-1" class="page-title">defpage</h1>
-                                    <p>This is the defpage section</p>
-                                </paper-material>
-                            </section>
-                            <section tabindex="-1" data-route="defcomponent">
-                                <paper-material elevation="1">
-                                    <h1 tabindex="-1" class="page-title">defcomponent</h1>
-                                    <p>This is the defcomponent section</p>
-                                </paper-material>
-                            </section>
-                            <section tabindex="-1" data-route="user-info">
-                                <paper-material elevation="-1">
-                                    <h1 tabindex="-1" class="page-title">User: {{params.name}}</h1>
-                                    <div>This is {{params.name}}'s section</div>
-                                </paper-material>
-                            </section>
                             <section tabindex="-1" data-route="styling">
-                                <paper-material elevation="-1">
-                                    <h2 tabindex="-1" class="page-title">Styling</h2>
-                                    <div>foo</div>
+                                <h1 tabindex="-1" class="page-title">Styling</h1>
+                                <paper-material elevation="1">
+                                    <p>foo</p>
                                 </paper-material>
                             </section>
-                            <section tabindex="-1" data-route="contact">
+                            <section tabindex="-1" data-route="boot-miraj">
+                                <h1 tabindex="-1" class="page-title">boot-miraj</h1>
                                 <paper-material elevation="1">
-                                    <h1 tabindex="-1" class="page-title">Contact</h1>
-                                    <p>This is the contact section</p>
+                                    <p>foo</p>
+                                </paper-material>
+                            </section>
+                            <section tabindex="-1" data-route="workflow">
+                                <paper-material elevation="1">
+                                    <h1 tabindex="-1" class="page-title">Workflow</h1>
+                                    <p>This is the workflow section</p>
+                                </paper-material>
+                            </section>
+                            <section tabindex="-1" data-route="roadmap">
+                                <paper-material elevation="1">
+                                    <h1 tabindex="-1" class="page-title">Status &amp;amp; Roadmap</h1>
+                                    <p>This is the roadmap section</p>
                                 </paper-material>
                             </section>
                         </iron-pages>
