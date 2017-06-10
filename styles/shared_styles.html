@@ -30,3 +30,60 @@
     </style>
   </template>
 </dom-module>
+
+<dom-module id="pprint-code">
+  <template>
+    <style>
+/* Pretty printing styles. Used with google's code-prettify. */
+
+pre .opn, code .opn { color: var(--paper-blue-500); }
+pre .clo, code .clo { color: var(--paper-blue-500); }
+pre .pun, code .pun { color: black; } /* punctuation */
+
+pre .str, code .str { color: var(--paper-green-400); } /* string */
+pre .kwd, code .kwd { color: var(--paper-orange-800); } /* keyword */
+pre .com, code .com { color: #AEAEAE; font-style: italic; } /* comment - gray */
+pre .typ, code .typ { color: #89bdff; } /* type - light blue */
+pre .lit, code .lit { color: #3387CC; } /* literal - blue */
+pre .pln, code .pln { color: var(--paper-indigo-500); } /* plaintext */
+pre .tag, code .tag { color: var(--paper-blue-600); } /* html/xml tag */
+pre .atn, code .atn { color: #bdb76b; } /* html/xml attribute name  - khaki */
+pre .atv, code .atv { color: #65B042; } /* html/xml attribute value - green */
+pre .dec, code .dec { color: #3387CC; } /* decimal - blue */
+
+pre.prettyprint, code.prettyprint, code.prettyprint > code  {
+    background-color: var(--paper-grey-300)!important;
+    border-radius: 8px;
+    padding:4px;
+    margin:0 4px 4px 0;
+}
+
+pre.prettyprint {
+	width: 95%;
+	margin: 1em auto;
+	padding: 1em;
+	white-space: pre-wrap;
+}
+
+
+/* Specify class=linenums on a pre to get line numbering */
+ol.linenums { margin-top: 0; margin-bottom: 0; color: #AEAEAE; } /* IE indents via margin-left */
+li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8 { list-style-type: none }
+/* Alternate shading for lines */
+li.L1,li.L3,li.L5,li.L7,li.L9 { }
+
+@media print {
+  pre .str, code .str { color: #060; }
+  pre .kwd, code .kwd { color: #006; font-weight: bold; }
+  pre .com, code .com { color: #600; font-style: italic; }
+  pre .typ, code .typ { color: #404; font-weight: bold; }
+  pre .lit, code .lit { color: #044; }
+  pre .pun, code .pun { color: #440; }
+  pre .pln, code .pln { color: #000; }
+  pre .tag, code .tag { color: #006; font-weight: bold; }
+  pre .atn, code .atn { color: #404; }
+  pre .atv, code .atv { color: #060; }
+}
+    </style>
+  </template>
+</dom-module>

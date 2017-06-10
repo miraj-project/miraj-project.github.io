@@ -1,0 +1,21 @@
+
+    <link rel="import" href="/miraj/polymer/assets/polymer/polymer.html">
+    <link rel="import" href="/miraj/polymer/assets/paper-button/paper-button.html">
+    <link rel="import" href="/miraj/polymer/assets/paper-card/paper-card.html">
+    <link rel="import" href="/miraj/polymer/assets/iron-ajax/iron-ajax.html">
+    <link rel="import" href="/miraj/polymer/assets/iron-icon/iron-icon.html">
+    <dom-module id="proj-devices">
+        <template>
+            <style>/* proj/widgets/devices.css */
+
+</style>
+            <iron-ajax last-response="{{devices}}" url="/data/devices.json" handle-as="json" auto></iron-ajax>
+            <div>
+                <h1 tabindex="-1" class="page-title">Devices</h1>
+                <template is="dom-repeat" items="{{devices}}">
+                    <proj-device-card device="{{item}}"></proj-device-card>
+                </template>
+            </div>
+        </template>
+    </dom-module>
+

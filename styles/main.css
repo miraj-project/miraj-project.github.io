@@ -20,7 +20,7 @@ body {
 h1.page-title {margin:0!important;
 	       outline: none;}
 
-.devices {background-color:#E8EAF6;}
+paper-material {padding-bottom:2px;}
 
 @media (max-width: 960px) {
     .content {
@@ -50,3 +50,4 @@ h1.page-title {margin:0!important;
     }
 
 }
+

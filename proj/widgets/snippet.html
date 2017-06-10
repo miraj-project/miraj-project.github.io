@@ -1,0 +1,19 @@
+
+    <link rel="import" href="/miraj/polymer/assets/polymer/polymer.html">
+    <dom-module id="proj-snippet">
+        <template>
+            <style>/* proj/widgets/snipppet.css */
+
+:host > div {margin:8px;padding:4px;}
+</style>
+            <div>
+                <code class="prettyprint lang-clj">
+                    <content select="code.clj"></content>
+                </code>
+                <code class="prettyprint lang-html">
+                    <content select="code.html"></content>
+                </code>
+            </div>
+        </template>
+    </dom-module>
+

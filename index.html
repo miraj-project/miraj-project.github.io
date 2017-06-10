@@ -116,13 +116,17 @@
                 HTML.  (A genuine Clojure face for CSS programming
                 remains a future project).</p>
                                     <p>Providing Clojure functions for HTML elements is
-                relatively trivial.  Things get a little more
-                complicated when you add web components, however.
-                Miraj allows the programmer to define and use
-                Polymer-based components in idiomatic Clojure, without
-                having to worry about the directory structures, file
-                names, and href values required to make the generated
-                HTML, Javascript and CSS files work together.</p>
+                relatively trivial.  Miraj also provides macros that
+                make page and component definitions look similar to
+                the <code>deftype</code> and <code>defrecord</code>
+                constructions of Clojure.</p>
+                                    <p>Things get a little more complicated when you
+                add web components.  Miraj allows the programmer to
+                define and use Polymer-based components in idiomatic
+                Clojure, without having to worry about the directory
+                structures, file names, and href values required to
+                make the generated HTML, Javascript and CSS files work
+                together.</p>
                                 </paper-material>
                                 <paper-material elevation="1">
                                     <p>Miraj also makes it very easy to define and
@@ -145,16 +149,25 @@
                                     <h3>Basics</h3>
                                     <ul>
                                         <li>
-                                            <p>One function per HTML element:</p>
-                                            <code class="clojure">(h/div (h/span "Hello World"))</code>
-                                            <pre>=&gt; <code class="html">&lt;div&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/div&gt;</code>
-                                            </pre>
+                                            <div>One function per HTML element:</div>
+                                            <proj-snippet>
+                                                <code class="clj">(h/div (h/span "Hello World"))</code>
+                                                <code class="html">&lt;div&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/div&gt;</code>
+                                            </proj-snippet>
                                         </li>
                                         <li>
-                                            <p>Attributes passed as map:</p>
-                                            <code class="clojure">(h/span {:class "foo"} "Hello World")</code>
-                                            <pre>=&gt; <code class="html">&lt;span class="foo"&gt;Hello World&lt;/span&gt;</code>
-                                            </pre>
+                                            <div>test</div>
+                                            <proj-snippet>
+                                                <code class="clj">(h/div (h/span "Hello World"))</code>
+                                                <code class="html">&lt;div&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/div&gt;</code>
+                                            </proj-snippet>
+                                        </li>
+                                        <li>
+                                            <div>Attributes are passed as a keyword map:</div>
+                                            <proj-snippet>
+                                                <code class="clj">(h/span {:class "foo"} "Hello World")</code>
+                                                <code class="html">&lt;span class="foo"&gt;Hello World&lt;/span&gt;</code>
+                                            </proj-snippet>
                                         </li>
                                     </ul>
                                 </paper-material>
@@ -163,24 +176,28 @@
                                     <p>For id, class, and boolean attributes:</p>
                                     <ul>
                                         <li>
-                                            <code class="clojure">(h/span :#foo "Hello World")</code>
-                                            <pre>=&gt; <code class="html">&lt;span id="foo"&gt;Hello World&lt;/span&gt;</code>
-                                            </pre>
+                                            <proj-snippet>
+                                                <code class="clj">(h/span :#foo "Hello World")</code>
+                                                <code class="html">&lt;span id="foo"&gt;Hello World&lt;/span&gt;</code>
+                                            </proj-snippet>
                                         </li>
                                         <li>
-                                            <code class="clojure">(h/span :.bar.baz "Hello World")</code>
-                                            <pre>=&gt; <code class="html">&lt;span class="bar baz"&gt;Hello World&lt;/span&gt;</code>
-                                            </pre>
+                                            <proj-snippet>
+                                                <code class="clj">(h/span :.bar.baz "Hello World")</code>
+                                                <code class="html">&lt;span class="bar baz"&gt;Hello World&lt;/span&gt;</code>
+                                            </proj-snippet>
                                         </li>
                                         <li>
-                                            <code class="clojure">(h/span :?centered?horizontal "Hello World")</code>
-                                            <pre>=&gt; <code class="html">&lt;span centered horizontal&gt;Hello World&lt;/span&gt;</code>
-                                            </pre>
+                                            <proj-snippet>
+                                                <code class="clj">(h/span :?centered?horizontal "Hello World")</code>
+                                                <code class="html">&lt;span centered horizontal&gt;Hello World&lt;/span&gt;</code>
+                                            </proj-snippet>
                                         </li>
                                         <li>
-                                            <code class="clojure">(h/span :#foo.bar?centered "Hello World")</code>
-                                            <pre>=&gt; <code class="html">&lt;span id="foo" class="bar" centered&gt;Hello World&lt;/span&gt;</code>
-                                            </pre>
+                                            <proj-snippet>
+                                                <code class="clj">(h/span :#foo.bar?centered "Hello World")</code>
+                                                <code class="html">&lt;span id="foo" class="bar" centered&gt;Hello World&lt;/span&gt;</code>
+                                            </proj-snippet>
                                         </li>
                                     </ul>
                                 </paper-material>
@@ -189,19 +206,21 @@
                                     <p>Miraj supports special syntax for inline styles:</p>
                                     <ul>
                                         <li>
-                                            <code>(h/span {:miraj.style/color "blue"} "Hello World")<pre>=&gt; <code class="html">&lt;span style="color:blue;"&gt;Hello World&lt;/span&gt;</code>
-                                                </pre>
-                                            </code>
+                                            <proj-snippet>
+                                                <code>(h/span {:miraj.style/color "blue"} "Hello World")</code>
+                                                <code class="html">&lt;span style="color:blue;"&gt;Hello World&lt;/span&gt;</code>
+                                            </proj-snippet>
                                         </li>
                                     </ul>
-                                    <p>Pseudo-classes and -elements are supported:<span id="hover-eg"> Hello World</span>
+                                    <p>Pseudo-classes and -elements are supported:<span style="color:blue;" id="hover-eg"> Hello World</span>
                                         <style>#hover-eg:hover {color:red}</style>
                                     </p>
                                     <ul>
                                         <li>
-                                            <code class="clojure">(h/span :#foo {:miraj.style/hover {:color "red"} "Hello World")</code>
-                                            <pre>=&gt; <code class="html">&lt;span id="foo"&gt;Hello World&lt;/span&gt;&lt;style&gt;#foo:hover {color:red;}&lt;/style&gt;</code>
-                                            </pre>
+                                            <proj-snippet>
+                                                <code class="clj">(h/span :#foo {:miraj.style/hover {:color "red"} "Hello World")</code>
+                                                <code class="html">&lt;span id="foo"&gt;Hello World&lt;/span&gt;&lt;style&gt;#foo:hover {color:red;}&lt;/style&gt;</code>
+                                            </proj-snippet>
                                         </li>
                                     </ul>
                                 </paper-material>
@@ -268,8 +287,9 @@
                 <span role="button" tabindex="0" onclick="app.$.toast.hide()" class="toast-hide-button">Ok</span>
             </paper-toast>
         </template>
-        <script src="/main.js"></script>
+        <script src="main.js"></script>
         <script type="text/javascript" src="scripts/app.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=clj"></script>
         <script>if (!window.HTMLImports) {
 	document.dispatchEvent(new CustomEvent('WebComponentsReady', {bubbles: true}));
 	}</script>

@@ -1,7 +1,9 @@
 goog.addDependency("base.js", ['goog'], []);
 goog.addDependency("../cljs/core.js", ['cljs.core'], ['goog.string', 'goog.object', 'goog.math.Integer', 'goog.string.StringBuffer', 'goog.array', 'goog.math.Long']);
-goog.addDependency("../geras/widgets/device_card.js", ['geras.widgets.device_card'], ['cljs.core']);
-goog.addDependency("../geras/widgets/list.js", ['geras.widgets.list'], ['cljs.core']);
+goog.addDependency("../proj/widgets/devices.js", ['proj.widgets.devices'], ['cljs.core']);
+goog.addDependency("../proj/widgets/devices/core.js", ['proj.widgets.devices.core'], ['cljs.core', 'proj.widgets.devices']);
+goog.addDependency("../proj/widgets/device_card.js", ['proj.widgets.device_card'], ['cljs.core']);
+goog.addDependency("../proj/widgets/device_card/core.js", ['proj.widgets.device_card.core'], ['proj.widgets.device_card', 'cljs.core']);
 goog.addDependency("../index.js", ['index'], ['cljs.core']);
 goog.addDependency("../clojure/browser/event.js", ['clojure.browser.event'], ['cljs.core', 'goog.events.EventTarget', 'goog.events.EventType', 'goog.events']);
 goog.addDependency("../clojure/browser/net.js", ['clojure.browser.net'], ['goog.net.xpc.CfgFields', 'goog.net.XhrIo', 'goog.json', 'goog.Uri', 'cljs.core', 'goog.net.EventType', 'goog.net.xpc.CrossPageChannel', 'goog.net.WebSocket', 'clojure.browser.event']);
@@ -15,9 +17,8 @@ goog.addDependency("../weasel/impls/websocket.js", ['weasel.impls.websocket'], [
 goog.addDependency("../cljs/reader.js", ['cljs.reader'], ['goog.string', 'cljs.core', 'goog.string.StringBuffer']);
 goog.addDependency("../weasel/repl.js", ['weasel.repl'], ['goog.dom', 'clojure.browser.repl', 'weasel.impls.websocket', 'cljs.core', 'clojure.browser.net', 'cljs.reader', 'clojure.browser.event']);
 goog.addDependency("../adzerk/boot_cljs_repl.js", ['adzerk.boot_cljs_repl'], ['weasel.repl', 'cljs.core']);
-goog.addDependency("../geras/widgets/greeting/core.js", ['geras.widgets.greeting.core'], ['cljs.core']);
-goog.addDependency("../geras/widgets/list/core.js", ['geras.widgets.list.core'], ['geras.widgets.list', 'cljs.core']);
-goog.addDependency("../geras/widgets/device_card/core.js", ['geras.widgets.device_card.core'], ['geras.widgets.device_card', 'cljs.core']);
-goog.addDependency("../geras/widgets/devices.js", ['geras.widgets.devices'], ['cljs.core']);
-goog.addDependency("../geras/widgets/devices/core.js", ['geras.widgets.devices.core'], ['cljs.core', 'geras.widgets.devices']);
-goog.addDependency("../boot/cljs/main40591.js", ['boot.cljs.main40591'], ['geras.widgets.device_card', 'geras.widgets.list', 'cljs.core', 'index', 'adzerk.boot_cljs_repl', 'geras.widgets.greeting.core', 'geras.widgets.list.core', 'geras.widgets.device_card.core', 'geras.widgets.devices', 'geras.widgets.devices.core']);
+goog.addDependency("../proj/widgets/list.js", ['proj.widgets.list'], ['cljs.core']);
+goog.addDependency("../proj/widgets/list/core.js", ['proj.widgets.list.core'], ['cljs.core', 'proj.widgets.list']);
+goog.addDependency("../proj/widgets/greeting/core.js", ['proj.widgets.greeting.core'], ['cljs.core']);
+goog.addDependency("../proj/widgets/snippet/core.js", ['proj.widgets.snippet.core'], ['cljs.core']);
+goog.addDependency("../boot/cljs/main40608.js", ['boot.cljs.main40608'], ['proj.widgets.devices.core', 'proj.widgets.device_card', 'proj.widgets.device_card.core', 'cljs.core', 'index', 'adzerk.boot_cljs_repl', 'proj.widgets.list.core', 'proj.widgets.greeting.core', 'proj.widgets.snippet.core', 'proj.widgets.list', 'proj.widgets.devices']);
