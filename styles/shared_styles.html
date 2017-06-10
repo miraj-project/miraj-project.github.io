@@ -47,12 +47,21 @@ pre .typ, code .typ { color: #89bdff; } /* type - light blue */
 pre .lit, code .lit { color: #3387CC; } /* literal - blue */
 pre .pln, code .pln { color: var(--paper-indigo-500); } /* plaintext */
 pre .tag, code .tag { color: var(--paper-blue-600); } /* html/xml tag */
-pre .atn, code .atn { color: #bdb76b; } /* html/xml attribute name  - khaki */
+pre .atn, code .atn { color: var(--paper-green-800); } /* html/xml attribute name */
 pre .atv, code .atv { color: #65B042; } /* html/xml attribute value - green */
 pre .dec, code .dec { color: #3387CC; } /* decimal - blue */
 
-pre.prettyprint, code.prettyprint, code.prettyprint > code  {
+pre.prettyprint,  pre.prettyprint > code.clj
+code.prettyprint, code.prettyprint > code.clj  {
+    background-color: var(--paper-amber-100)!important;
+}
+
+pre.prettyprint,  pre.prettyprint > code.html
+code.prettyprint, code.prettyprint > code.html  {
     background-color: var(--paper-grey-300)!important;
+}
+
+pre.prettyprint, code.prettyprint, code.prettyprint > code  {
     border-radius: 8px;
     padding:4px;
     margin:0 4px 4px 0;
