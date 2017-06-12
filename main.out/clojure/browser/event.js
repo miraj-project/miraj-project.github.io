@@ -14,14 +14,14 @@ clojure.browser.event.event_types = (function clojure$browser$event$event_types(
 if((!((this$ == null))) && (!((this$.clojure$browser$event$IEventType$event_types$arity$1 == null)))){
 return this$.clojure$browser$event$IEventType$event_types$arity$1(this$);
 } else {
-var x__8563__auto__ = (((this$ == null))?null:this$);
-var m__8564__auto__ = (clojure.browser.event.event_types[goog.typeOf(x__8563__auto__)]);
-if(!((m__8564__auto__ == null))){
-return m__8564__auto__.call(null,this$);
+var x__8599__auto__ = (((this$ == null))?null:this$);
+var m__8600__auto__ = (clojure.browser.event.event_types[goog.typeOf(x__8599__auto__)]);
+if(!((m__8600__auto__ == null))){
+return m__8600__auto__.call(null,this$);
 } else {
-var m__8564__auto____$1 = (clojure.browser.event.event_types["_"]);
-if(!((m__8564__auto____$1 == null))){
-return m__8564__auto____$1.call(null,this$);
+var m__8600__auto____$1 = (clojure.browser.event.event_types["_"]);
+if(!((m__8600__auto____$1 == null))){
+return m__8600__auto____$1.call(null,this$);
 } else {
 throw cljs.core.missing_protocol.call(null,"IEventType.event-types",this$);
 }
@@ -34,10 +34,10 @@ goog.events.EventTarget.prototype.clojure$browser$event$IEventType$ = cljs.core.
 goog.events.EventTarget.prototype.clojure$browser$event$IEventType$event_types$arity$1 = (function (this$){
 var this$__$1 = this;
 return cljs.core.into.call(null,cljs.core.PersistentArrayMap.EMPTY,cljs.core.map.call(null,((function (this$__$1){
-return (function (p__9127){
-var vec__9128 = p__9127;
-var k = cljs.core.nth.call(null,vec__9128,(0),null);
-var v = cljs.core.nth.call(null,vec__9128,(1),null);
+return (function (p__9171){
+var vec__9172 = p__9171;
+var k = cljs.core.nth.call(null,vec__9172,(0),null);
+var v = cljs.core.nth.call(null,vec__9172,(1),null);
 return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.keyword.call(null,k.toLowerCase()),v], null);
 });})(this$__$1))
 ,cljs.core.merge.call(null,cljs.core.js__GT_clj.call(null,goog.events.EventType))));
@@ -48,10 +48,10 @@ Element.prototype.clojure$browser$event$IEventType$ = cljs.core.PROTOCOL_SENTINE
 Element.prototype.clojure$browser$event$IEventType$event_types$arity$1 = (function (this$){
 var this$__$1 = this;
 return cljs.core.into.call(null,cljs.core.PersistentArrayMap.EMPTY,cljs.core.map.call(null,((function (this$__$1){
-return (function (p__9131){
-var vec__9132 = p__9131;
-var k = cljs.core.nth.call(null,vec__9132,(0),null);
-var v = cljs.core.nth.call(null,vec__9132,(1),null);
+return (function (p__9175){
+var vec__9176 = p__9175;
+var k = cljs.core.nth.call(null,vec__9176,(0),null);
+var v = cljs.core.nth.call(null,vec__9176,(1),null);
 return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.keyword.call(null,k.toLowerCase()),v], null);
 });})(this$__$1))
 ,cljs.core.merge.call(null,cljs.core.js__GT_clj.call(null,goog.events.EventType))));
@@ -59,23 +59,23 @@ return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMP
 } else {
 }
 clojure.browser.event.listen = (function clojure$browser$event$listen(var_args){
-var args9135 = [];
-var len__9066__auto___9138 = arguments.length;
-var i__9067__auto___9139 = (0);
+var args9179 = [];
+var len__9102__auto___9182 = arguments.length;
+var i__9103__auto___9183 = (0);
 while(true){
-if((i__9067__auto___9139 < len__9066__auto___9138)){
-args9135.push((arguments[i__9067__auto___9139]));
+if((i__9103__auto___9183 < len__9102__auto___9182)){
+args9179.push((arguments[i__9103__auto___9183]));
 
-var G__9140 = (i__9067__auto___9139 + (1));
-i__9067__auto___9139 = G__9140;
+var G__9184 = (i__9103__auto___9183 + (1));
+i__9103__auto___9183 = G__9184;
 continue;
 } else {
 }
 break;
 }
 
-var G__9137 = args9135.length;
-switch (G__9137) {
+var G__9181 = args9179.length;
+switch (G__9181) {
 case 3:
 return clojure.browser.event.listen.cljs$core$IFn$_invoke$arity$3((arguments[(0)]),(arguments[(1)]),(arguments[(2)]));
 
@@ -85,7 +85,7 @@ return clojure.browser.event.listen.cljs$core$IFn$_invoke$arity$4((arguments[(0)
 
 break;
 default:
-throw (new Error([cljs.core.str.cljs$core$IFn$_invoke$arity$1("Invalid arity: "),cljs.core.str.cljs$core$IFn$_invoke$arity$1(args9135.length)].join('')));
+throw (new Error([cljs.core.str.cljs$core$IFn$_invoke$arity$1("Invalid arity: "),cljs.core.str.cljs$core$IFn$_invoke$arity$1(args9179.length)].join('')));
 
 }
 });
@@ -101,23 +101,23 @@ return goog.events.listen(src,cljs.core.get.call(null,clojure.browser.event.even
 clojure.browser.event.listen.cljs$lang$maxFixedArity = 4;
 
 clojure.browser.event.listen_once = (function clojure$browser$event$listen_once(var_args){
-var args9142 = [];
-var len__9066__auto___9145 = arguments.length;
-var i__9067__auto___9146 = (0);
+var args9186 = [];
+var len__9102__auto___9189 = arguments.length;
+var i__9103__auto___9190 = (0);
 while(true){
-if((i__9067__auto___9146 < len__9066__auto___9145)){
-args9142.push((arguments[i__9067__auto___9146]));
+if((i__9103__auto___9190 < len__9102__auto___9189)){
+args9186.push((arguments[i__9103__auto___9190]));
 
-var G__9147 = (i__9067__auto___9146 + (1));
-i__9067__auto___9146 = G__9147;
+var G__9191 = (i__9103__auto___9190 + (1));
+i__9103__auto___9190 = G__9191;
 continue;
 } else {
 }
 break;
 }
 
-var G__9144 = args9142.length;
-switch (G__9144) {
+var G__9188 = args9186.length;
+switch (G__9188) {
 case 3:
 return clojure.browser.event.listen_once.cljs$core$IFn$_invoke$arity$3((arguments[(0)]),(arguments[(1)]),(arguments[(2)]));
 
@@ -127,7 +127,7 @@ return clojure.browser.event.listen_once.cljs$core$IFn$_invoke$arity$4((argument
 
 break;
 default:
-throw (new Error([cljs.core.str.cljs$core$IFn$_invoke$arity$1("Invalid arity: "),cljs.core.str.cljs$core$IFn$_invoke$arity$1(args9142.length)].join('')));
+throw (new Error([cljs.core.str.cljs$core$IFn$_invoke$arity$1("Invalid arity: "),cljs.core.str.cljs$core$IFn$_invoke$arity$1(args9186.length)].join('')));
 
 }
 });
@@ -143,23 +143,23 @@ return goog.events.listenOnce(src,cljs.core.get.call(null,clojure.browser.event.
 clojure.browser.event.listen_once.cljs$lang$maxFixedArity = 4;
 
 clojure.browser.event.unlisten = (function clojure$browser$event$unlisten(var_args){
-var args9149 = [];
-var len__9066__auto___9152 = arguments.length;
-var i__9067__auto___9153 = (0);
+var args9193 = [];
+var len__9102__auto___9196 = arguments.length;
+var i__9103__auto___9197 = (0);
 while(true){
-if((i__9067__auto___9153 < len__9066__auto___9152)){
-args9149.push((arguments[i__9067__auto___9153]));
+if((i__9103__auto___9197 < len__9102__auto___9196)){
+args9193.push((arguments[i__9103__auto___9197]));
 
-var G__9154 = (i__9067__auto___9153 + (1));
-i__9067__auto___9153 = G__9154;
+var G__9198 = (i__9103__auto___9197 + (1));
+i__9103__auto___9197 = G__9198;
 continue;
 } else {
 }
 break;
 }
 
-var G__9151 = args9149.length;
-switch (G__9151) {
+var G__9195 = args9193.length;
+switch (G__9195) {
 case 3:
 return clojure.browser.event.unlisten.cljs$core$IFn$_invoke$arity$3((arguments[(0)]),(arguments[(1)]),(arguments[(2)]));
 
@@ -169,7 +169,7 @@ return clojure.browser.event.unlisten.cljs$core$IFn$_invoke$arity$4((arguments[(
 
 break;
 default:
-throw (new Error([cljs.core.str.cljs$core$IFn$_invoke$arity$1("Invalid arity: "),cljs.core.str.cljs$core$IFn$_invoke$arity$1(args9149.length)].join('')));
+throw (new Error([cljs.core.str.cljs$core$IFn$_invoke$arity$1("Invalid arity: "),cljs.core.str.cljs$core$IFn$_invoke$arity$1(args9193.length)].join('')));
 
 }
 });

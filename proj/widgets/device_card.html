@@ -1,12 +1,4 @@
-
-    <link rel="import" href="/miraj/polymer/assets/polymer/polymer.html">
-    <link rel="import" href="/miraj/polymer/assets/paper-button/paper-button.html">
-    <link rel="import" href="/miraj/polymer/assets/paper-card/paper-card.html">
-    <link rel="import" href="/miraj/polymer/assets/iron-ajax/iron-ajax.html">
-    <link rel="import" href="/miraj/polymer/assets/iron-icon/iron-icon.html">
-    <dom-module id="proj-device-card">
-        <template>
-            <style>/* proj/widgets/device-card.css */
+<link rel="import" href="/miraj/polymer/assets/polymer/polymer.html"><link rel="import" href="/miraj/polymer/assets/paper-button/paper-button.html"><link rel="import" href="/miraj/polymer/assets/paper-card/paper-card.html"><link rel="import" href="/miraj/polymer/assets/iron-ajax/iron-ajax.html"><link rel="import" href="/miraj/polymer/assets/iron-icon/iron-icon.html"><dom-module id="proj-device-card"><template><style>/* proj/widgets/device-card.css */
  
 .device-name {color:red;}
 
@@ -81,18 +73,4 @@ paper-fab {
     }
 }
 
-</style>
-            <a class="card-container" href="#/detail/{{device.di}}">
-                <paper-card>
-                    <div class="card-content">
-                        <h2 class="device-name">{{device.n}}</h2>
-                        <div>Types: <template is="dom-repeat" items="{{device.rt}}">
-                                <p style="padding-left:16px;">{{item}}</p>
-                            </template>
-                        </div>
-                    </div>
-                </paper-card>
-            </a>
-        </template>
-    </dom-module>
-
+</style><a class="card-container" href="#/detail/{{device.di}}"><paper-card><div class="card-content"><h2 class="device-name">{{device.n}}</h2><div>Types: <template is="dom-repeat" items="{{device.rt}}"><p style="padding-left:16px;">{{item}}</p></template></div></div></paper-card></a></template></dom-module>

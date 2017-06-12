@@ -16,7 +16,7 @@
        :listeners nil}))
   (catch
     js/Error
-    e__7618__auto__
+    e__7622__auto__
     (clojure.core/println
       "\"Caught exception on component registration:\""
-      e__7618__auto__)))
+      e__7622__auto__)))

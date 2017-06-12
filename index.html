@@ -32,9 +32,9 @@
                             <iron-icon icon="home"></iron-icon>
                             <span>Home</span>
                         </a>
-                        <a data-route="summary" href="{{baseUrl}}summary">
+                        <a data-route="html5" href="{{baseUrl}}html5">
                             <iron-icon icon="image:camera"></iron-icon>
-                            <span>Summary</span>
+                            <span>HTML5</span>
                         </a>
                         <a data-route="pages" href="{{baseUrl}}pages">
                             <iron-icon icon="content-copy"></iron-icon>
@@ -118,7 +118,12 @@
                                     <p>Providing Clojure functions for HTML elements is
                 relatively trivial.  Miraj also provides macros that
                 make page and component definitions look similar to
-                the <code>deftype</code> and <code>defrecord</code>
+                the <proj-snippet class="inline" clj>
+                                            <code class="clj">deftype</code>
+                                        </proj-snippet>
+                and <proj-snippet class="inline" clj>
+                                            <code class="clj">defrecord</code>
+                                        </proj-snippet>
                 constructions of Clojure.</p>
                                     <p>Things get a little more complicated when you
                 add web components.  Miraj allows the programmer to
@@ -131,40 +136,48 @@
                                 <paper-material elevation="1">
                                     <p>Miraj also makes it very easy to define and
                 share component libraries.  Multiple components may be
-                defined across multiple namespaces;
-                a <code>deflibrary</code> macro then assembles any
-                combination of components into a library namespace,
-                which is independent of the defining namespaces.
-                Miraj can automatically generate a demo page for
-                previewing/testing components under development.</p>
+                defined across multiple namespaces; a <proj-snippet class="inline" clj>
+                                            <code class="clj">deflibrary</code>
+                                        </proj-snippet> macro then assembles any combination of components
+                into a library namespace, which is independent of the
+                defining namespaces.  Miraj can automatically generate
+                a demo page for previewing/testing components under
+                development.</p>
                                     <p>Components can also be easily defined as one-off
                 elements for use in a single page.  Both page and
                 components can be defined in the same project.</p>
                                 </paper-material>
                             </section>
-                            <section tabindex="-1" data-route="summary">
-                                <h1 tabindex="-1" class="page-title">Summary</h1>
-                                <p>Assuming <code>miraj.html</code> is aliased to <code>h</code>:</p>
+                            <section tabindex="-1" data-route="html5">
+                                <h1 tabindex="-1" class="page-title">HTML5</h1>
+                                <p>Assuming <proj-snippet class="inline" clj>
+                                        <code class="clj">miraj.html</code>
+                                    </proj-snippet>
+              is aliased to <proj-snippet class="inline" clj>
+                                        <code class="clj">h</code>
+                                    </proj-snippet>:</p>
                                 <paper-material elevation="1">
                                     <h3>Basics</h3>
                                     <ul>
                                         <li>
                                             <div>One function per HTML element:</div>
-                                            <proj-snippet>
+                                            <proj-snippet clj>
                                                 <code class="clj">(h/div (h/span "Hello World"))</code>
+                                            </proj-snippet>
+                                            <proj-snippet html>
                                                 <code class="html">&lt;div&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/div&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
                                             <div>test</div>
-                                            <proj-snippet>
+                                            <proj-snippet clj html>
                                                 <code class="clj">(h/div (h/span "Hello World"))</code>
                                                 <code class="html">&lt;div&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/div&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
                                             <div>Attributes are passed as a keyword map:</div>
-                                            <proj-snippet>
+                                            <proj-snippet clj html>
                                                 <code class="clj">(h/span {:class "foo"} "Hello World")</code>
                                                 <code class="html">&lt;span class="foo"&gt;Hello World&lt;/span&gt;</code>
                                             </proj-snippet>
@@ -176,59 +189,107 @@
                                     <p>For id, class, and boolean attributes:</p>
                                     <ul>
                                         <li>
-                                            <proj-snippet>
+                                            <proj-snippet clj html>
                                                 <code class="clj">(h/span :#foo "Hello World")</code>
                                                 <code class="html">&lt;span id="foo"&gt;Hello World&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
-                                            <proj-snippet>
+                                            <proj-snippet clj html>
                                                 <code class="clj">(h/span :.bar.baz "Hello World")</code>
                                                 <code class="html">&lt;span class="bar baz"&gt;Hello World&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
-                                            <proj-snippet>
+                                            <proj-snippet clj html>
                                                 <code class="clj">(h/span :?centered?horizontal "Hello World")</code>
                                                 <code class="html">&lt;span centered horizontal&gt;Hello World&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
-                                            <proj-snippet>
+                                            <proj-snippet clj html>
                                                 <code class="clj">(h/span :#foo.bar?centered "Hello World")</code>
                                                 <code class="html">&lt;span id="foo" class="bar" centered&gt;Hello World&lt;/span&gt;</code>
+                                            </proj-snippet>
+                                        </li>
+                                    </ul>
+                                    <p>For inline styles, use the <proj-snippet class="inline" clj>
+                                            <code class="clj">miraj.style</code>
+                                        </proj-snippet> namespace:</p>
+                                    <ul>
+                                        <li>
+                                            <proj-snippet clj html>
+                                                <code class="clj">(h/span {:miraj.style/color "blue"} "Hello World")</code>
+                                                <code class="html">&lt;span style="color:blue;"&gt;Hello World&lt;/span&gt;</code>
+                                            </proj-snippet>
+                                        </li>
+                                    </ul>
+                                    <p>Pseudo-classes and -elements are supported:</p>
+                                    <ul>
+                                        <li>
+                                            <span>Hover: <span id="foobar"> Hello World</span>
+                                                <style>#foobar:hover {color:red}</style>
+                                            </span>
+                                            <proj-snippet clj html>
+                                                <code class="clj">(h/span :#foo {:miraj.style/hover {:color "red"} "Hello World")</code>
+                                                <code class="html">&lt;span id="foo"&gt;Hello World&lt;/span&gt;&lt;style&gt;#foo:hover {color:red;}&lt;/style&gt;</code>
+                                            </proj-snippet>
+                                        </li>
+                                        <li>
+                                            <span>using :before pseudo element:  <span id="beforeex">World</span>
+                                                <style>#beforeex:before {content:'Howdy, '}</style>
+                                            </span>
+                                            <proj-snippet clj html>
+                                                <code class="clj">(h/span :#foo {:miraj.style/before {:content "Howdy, "} "World")</code>
+                                                <code class="html">&lt;span id="foo"&gt;World&lt;/span&gt;&lt;style&gt;#foo:before {content: "Howdy, "}&lt;/style&gt;</code>
                                             </proj-snippet>
                                         </li>
                                     </ul>
                                 </paper-material>
                                 <paper-material elevation="1">
                                     <h3>Styling</h3>
-                                    <p>Miraj supports special syntax for inline styles:</p>
-                                    <ul>
-                                        <li>
-                                            <proj-snippet>
-                                                <code>(h/span {:miraj.style/color "blue"} "Hello World")</code>
-                                                <code class="html">&lt;span style="color:blue;"&gt;Hello World&lt;/span&gt;</code>
-                                            </proj-snippet>
-                                        </li>
-                                    </ul>
-                                    <p>Pseudo-classes and -elements are supported:<span style="color:blue;" id="hover-eg"> Hello World</span>
-                                        <style>#hover-eg:hover {color:red}</style>
-                                    </p>
-                                    <ul>
-                                        <li>
-                                            <proj-snippet>
-                                                <code class="clj">(h/span :#foo {:miraj.style/hover {:color "red"} "Hello World")</code>
-                                                <code class="html">&lt;span id="foo"&gt;Hello World&lt;/span&gt;&lt;style&gt;#foo:hover {color:red;}&lt;/style&gt;</code>
-                                            </proj-snippet>
-                                        </li>
-                                    </ul>
                                 </paper-material>
                             </section>
                             <section tabindex="-1" data-route="pages">
                                 <h1 tabindex="-1" class="page-title">Pages</h1>
                                 <paper-material elevation="1">
-                                    <p>This is the pages section</p>
+                                    <p>To define an index.html page:</p>
+                                    <proj-snippet clj html>
+                                        <pre class="clj">(ns index
+  (:require [miraj.core :as miraj :refer [defpage]]
+            [miraj.html :as h] ...))
+...
+(defpage
+  "PAGE DOCSTRING"
+  (:require [miraj.polymer.paper :as paper :refer [card]])
+  ;; HTML meta-data passed as a (spec-validated) Clojure map:
+  #::h{:title "Page Title"
+       :description "Page description"
+       :charset "utf-8"
+       :viewport {::h/width :device-width
+                  ::h/scale {::h/min 0.5 ::h/max 2 ::h/initial 1}
+                  ::h/user-scalable true}}
+  (:body :?unresolved
+    (h/h1 "Hello, World Demo")
+    (paper/card (h/div "Hi, Card!"))))</pre>
+                                        <pre class="html">&lt;!doctype html&gt;
+&lt;!-- generated index.html --&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta content="utf-8" name="charset"&gt;
+        &lt;title&gt;Page Title&lt;/title&gt;
+        &lt;meta content="Page description" name="description"&gt;
+        &lt;meta content="width=device-width, minimum-scale=0.5, maximum-scale=2, initial-scale=1, user-scalable=yes" name="viewport"&gt;
+        &lt;link rel="import" href="/miraj/polymer/assets/paper-card/paper-card.html"&gt;
+    &lt;/head&gt;
+    &lt;body unresolved&gt;
+        &lt;h1&gt;Hello, World Demo&lt;/h1&gt;
+        &lt;paper-card&gt;
+            &lt;div&gt;Hi, Card!&lt;/div&gt;
+        &lt;/paper-card&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</pre>
+                                    </proj-snippet>
                                 </paper-material>
                             </section>
                             <section tabindex="-1" data-route="polymer">

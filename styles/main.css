@@ -22,6 +22,8 @@ h1.page-title {margin:0!important;
 
 paper-material {padding-bottom:2px;}
 
+li {margin-bottom: 12px;}
+
 @media (max-width: 960px) {
     .content {
         max-width: 800px;
