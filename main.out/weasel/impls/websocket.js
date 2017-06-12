@@ -30,23 +30,23 @@ throw cljs.core.missing_protocol.call(null,"IWebSocket.open?",this$);
 });
 
 weasel.impls.websocket.websocket_connection = (function weasel$impls$websocket$websocket_connection(var_args){
-var args11536 = [];
-var len__9102__auto___11539 = arguments.length;
-var i__9103__auto___11540 = (0);
+var args11540 = [];
+var len__9102__auto___11543 = arguments.length;
+var i__9103__auto___11544 = (0);
 while(true){
-if((i__9103__auto___11540 < len__9102__auto___11539)){
-args11536.push((arguments[i__9103__auto___11540]));
+if((i__9103__auto___11544 < len__9102__auto___11543)){
+args11540.push((arguments[i__9103__auto___11544]));
 
-var G__11541 = (i__9103__auto___11540 + (1));
-i__9103__auto___11540 = G__11541;
+var G__11545 = (i__9103__auto___11544 + (1));
+i__9103__auto___11544 = G__11545;
 continue;
 } else {
 }
 break;
 }
 
-var G__11538 = args11536.length;
-switch (G__11538) {
+var G__11542 = args11540.length;
+switch (G__11542) {
 case 0:
 return weasel.impls.websocket.websocket_connection.cljs$core$IFn$_invoke$arity$0();
 
@@ -60,7 +60,7 @@ return weasel.impls.websocket.websocket_connection.cljs$core$IFn$_invoke$arity$2
 
 break;
 default:
-throw (new Error([cljs.core.str.cljs$core$IFn$_invoke$arity$1("Invalid arity: "),cljs.core.str.cljs$core$IFn$_invoke$arity$1(args11536.length)].join('')));
+throw (new Error([cljs.core.str.cljs$core$IFn$_invoke$arity$1("Invalid arity: "),cljs.core.str.cljs$core$IFn$_invoke$arity$1(args11540.length)].join('')));
 
 }
 });
@@ -113,10 +113,10 @@ goog.net.WebSocket.prototype.clojure$browser$event$IEventType$ = cljs.core.PROTO
 goog.net.WebSocket.prototype.clojure$browser$event$IEventType$event_types$arity$1 = (function (this$){
 var this$__$1 = this;
 return cljs.core.into.call(null,cljs.core.PersistentArrayMap.EMPTY,cljs.core.map.call(null,((function (this$__$1){
-return (function (p__11543){
-var vec__11544 = p__11543;
-var k = cljs.core.nth.call(null,vec__11544,(0),null);
-var v = cljs.core.nth.call(null,vec__11544,(1),null);
+return (function (p__11547){
+var vec__11548 = p__11547;
+var k = cljs.core.nth.call(null,vec__11548,(0),null);
+var v = cljs.core.nth.call(null,vec__11548,(1),null);
 return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.keyword.call(null,k.toLowerCase()),v], null);
 });})(this$__$1))
 ,cljs.core.merge.call(null,cljs.core.js__GT_clj.call(null,goog.net.WebSocket.EventType))));

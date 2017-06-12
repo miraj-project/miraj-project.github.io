@@ -36,9 +36,9 @@
                             <iron-icon icon="image:camera"></iron-icon>
                             <span>HTML5</span>
                         </a>
-                        <a data-route="pages" href="{{baseUrl}}pages">
+                        <a data-route="miraj" href="{{baseUrl}}miraj">
                             <iron-icon icon="content-copy"></iron-icon>
-                            <span>Pages</span>
+                            <span>Miraj</span>
                         </a>
                         <a data-route="polymer" href="{{baseUrl}}polymer">
                             <iron-icon icon="polymer"></iron-icon>
@@ -90,7 +90,7 @@
                     <div class="content">
                         <iron-pages selected="{{route}}" attr-for-selected="data-route">
                             <section tabindex="-1" data-route="home">
-                                <h1 tabindex="-1" class="page-title"></h1>
+                                <h1 class="page-title"></h1>
                                 <paper-material elevation="1">
                                     <p>The goal of the Miraj Project is to create a
                 pure Clojure, 100% functional programming model for
@@ -149,7 +149,7 @@
                                 </paper-material>
                             </section>
                             <section tabindex="-1" data-route="html5">
-                                <h1 tabindex="-1" class="page-title">HTML5</h1>
+                                <h1 class="page-title">HTML5</h1>
                                 <p>Assuming <proj-snippet class="inline" clj>
                                         <code class="clj">miraj.html</code>
                                     </proj-snippet>
@@ -169,12 +169,29 @@
                                             </proj-snippet>
                                         </li>
                                         <li>
-                                            <div>test</div>
+                                            <div>HTML5 <a href="https://www.w3.org/TR/html51/syntax.html#void-elements">void elements</a> cannot have any content; they also
+                              cannot be "self-closing"; they may
+                              only have a start tag with no '/'.
+                              Miraj understands void elements:</div>
                                             <proj-snippet clj html>
-                                                <code class="clj">(h/div (h/span "Hello World"))</code>
-                                                <code class="html">&lt;div&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/div&gt;</code>
+                                                <code class="clj">(h/br)</code>
+                                                <code class="html">&lt;br&gt;</code>
                                             </proj-snippet>
                                         </li>
+                                        <li>
+                                            <div>HTML5 empty elements must not be
+                 self-closing; they must have a close tag.  Miraj
+                 understands empty elements:</div>
+                                            <proj-snippet clj html>
+                                                <code class="clj">(h/script {:src "foo.js"})</code>
+                                                <code class="html">&lt;script src="foo.js"&gt;&lt;/script&gt;</code>
+                                            </proj-snippet>
+                                        </li>
+                                    </ul>
+                                </paper-material>
+                                <paper-material elevation="1">
+                                    <h3>Attributes</h3>
+                                    <ul>
                                         <li>
                                             <div>Attributes are passed as a keyword map:</div>
                                             <proj-snippet clj html>
@@ -182,7 +199,25 @@
                                                 <code class="html">&lt;span class="foo"&gt;Hello World&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
+                                        <li>
+                                            <div>With a few exceptions, clojure
+                 attribute values go through normal Clojure evaluation
+                 and then are serialized as strings. You can use
+                 expressions as attribute values:</div>
+                                            <proj-snippet clj html>
+                                                <code class="clj">(h/span {:foo (* 2 3)})</code>
+                                                <code class="html">&lt;span foo="6"&gt;&lt;/span&gt;</code>
+                                            </proj-snippet>
+                                        </li>
+                                        <li>
+                                            <div>BigInt and BigDecimal end up looking like Int and Decimal:</div>
+                                            <proj-snippet clj html>
+                                                <code class="clj">(h/span {:foo 9N})</code>
+                                                <code class="html">&lt;span foo="9"&gt;&lt;/span&gt;</code>
+                                            </proj-snippet>
+                                        </li>
                                     </ul>
+                                    <p>See <a href="https://github.com/miraj-project/co-dom">miraj.co-dom</a> for more examples.</p>
                                 </paper-material>
                                 <paper-material elevation="1">
                                     <h3>Sugar</h3>
@@ -247,31 +282,28 @@
                                     </ul>
                                 </paper-material>
                                 <paper-material elevation="1">
-                                    <h3>Styling</h3>
-                                </paper-material>
-                            </section>
-                            <section tabindex="-1" data-route="pages">
-                                <h1 tabindex="-1" class="page-title">Pages</h1>
-                                <paper-material elevation="1">
-                                    <p>To define an index.html page:</p>
+                                    <h3>Pages</h3>
+                                    <p>To define an index.html page,
+                use <proj-snippet class="inline" clj>
+                                            <code class="clj">miraj.core/defpage</code>
+                                        </proj-snippet>.
+                Pass HTML metadata as a Clojure map; Miraj will
+                validate the map against Clojure.spec
+                specifications (which may be found in <a href="https://github.com/miraj-project/html/blob/master/src/main/clj/miraj/html_spec.clj">miraj.html</a>, and then transform it into the appropriate elements in &lt;head&gt;.</p>
                                     <proj-snippet clj html>
                                         <pre class="clj">(ns index
   (:require [miraj.core :as miraj :refer [defpage]]
             [miraj.html :as h] ...))
-...
-(defpage
-  "PAGE DOCSTRING"
-  (:require [miraj.polymer.paper :as paper :refer [card]])
-  ;; HTML meta-data passed as a (spec-validated) Clojure map:
-  #::h{:title "Page Title"
-       :description "Page description"
-       :charset "utf-8"
-       :viewport {::h/width :device-width
-                  ::h/scale {::h/min 0.5 ::h/max 2 ::h/initial 1}
-                  ::h/user-scalable true}}
-  (:body :?unresolved
-    (h/h1 "Hello, World Demo")
-    (paper/card (h/div "Hi, Card!"))))</pre>
+  (defpage
+    "PAGE DOCSTRING"
+    #::h{:title "Page Title"
+         :description "Page description"
+         :charset "utf-8"
+         :viewport {::h/width :device-width
+                    ::h/scale {::h/min 0.5 ::h/max 2 ::h/initial 1}
+                    ::h/user-scalable true}}
+    (:body :?unresolved
+      (h/h1 "Hello, World Demo")))</pre>
                                         <pre class="html">&lt;!doctype html&gt;
 &lt;!-- generated index.html --&gt;
 &lt;html&gt;
@@ -279,18 +311,22 @@
         &lt;meta content="utf-8" name="charset"&gt;
         &lt;title&gt;Page Title&lt;/title&gt;
         &lt;meta content="Page description" name="description"&gt;
-        &lt;meta content="width=device-width, minimum-scale=0.5, maximum-scale=2, initial-scale=1, user-scalable=yes" name="viewport"&gt;
+        &lt;meta content="width=device-width,
+                       minimum-scale=0.5, maximum-scale=2, initial-scale=1,
+                       user-scalable=yes"
+                       name="viewport"&gt;
         &lt;link rel="import" href="/miraj/polymer/assets/paper-card/paper-card.html"&gt;
     &lt;/head&gt;
     &lt;body unresolved&gt;
         &lt;h1&gt;Hello, World Demo&lt;/h1&gt;
-        &lt;paper-card&gt;
-            &lt;div&gt;Hi, Card!&lt;/div&gt;
-        &lt;/paper-card&gt;
     &lt;/body&gt;
 &lt;/html&gt;</pre>
                                     </proj-snippet>
                                 </paper-material>
+                            </section>
+                            <section tabindex="-1" data-route="miraj">
+                                <h1 class="page-title">Miraj</h1>
+                                <paper-material elevation="1"></paper-material>
                             </section>
                             <section tabindex="-1" data-route="polymer">
                                 <h1 tabindex="-1" class="page-title">Polymer</h1>

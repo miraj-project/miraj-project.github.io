@@ -21,4 +21,4 @@ goog.addDependency("../proj/widgets/list.js", ['proj.widgets.list'], ['cljs.core
 goog.addDependency("../proj/widgets/list/core.js", ['proj.widgets.list.core'], ['cljs.core', 'proj.widgets.list']);
 goog.addDependency("../proj/widgets/greeting/core.js", ['proj.widgets.greeting.core'], ['cljs.core']);
 goog.addDependency("../proj/widgets/snippet/core.js", ['proj.widgets.snippet.core'], ['cljs.core']);
-goog.addDependency("../boot/cljs/main40551.js", ['boot.cljs.main40551'], ['proj.widgets.devices.core', 'proj.widgets.device_card', 'proj.widgets.device_card.core', 'cljs.core', 'index', 'adzerk.boot_cljs_repl', 'proj.widgets.list.core', 'proj.widgets.greeting.core', 'proj.widgets.snippet.core', 'proj.widgets.list', 'proj.widgets.devices']);
+goog.addDependency("../boot/cljs/main40661.js", ['boot.cljs.main40661'], ['proj.widgets.devices.core', 'proj.widgets.device_card', 'proj.widgets.device_card.core', 'cljs.core', 'index', 'adzerk.boot_cljs_repl', 'proj.widgets.list.core', 'proj.widgets.greeting.core', 'proj.widgets.snippet.core', 'proj.widgets.list', 'proj.widgets.devices']);
