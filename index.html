@@ -70,7 +70,7 @@
                         </a>
                         <a data-route="roadmap" href="{{baseUrl}}roadmap">
                             <iron-icon icon="maps:my-location"></iron-icon>
-                            <span>roadmap</span>
+                            <span>Status &amp; Roadmap</span>
                         </a>
                     </paper-menu>
                 </paper-scroll-header-panel>
@@ -147,9 +147,89 @@
                 elements for use in a single page.  Both page and
                 components can be defined in the same project.</p>
                                 </paper-material>
+                                <paper-material elevation="1">
+                                    <p>Miraj treats the three "native" languages of
+                web development (HTML, Javascript, CSS) as a kind of
+                web "assembly" language.  The programmer defines
+                pages and components in Clojure (including
+                Clojurescript), which Miraj translates into HTML,
+                Javascript, and CSS.</p>
+                                    <p>Clojurescript already eliminates the need to
+                program in Javascript; Miraj does the same for
+                HTML.  (A genuine Clojure face for CSS programming
+                remains a future project).</p>
+                                    <p>Providing Clojure functions for HTML elements is
+                relatively trivial.  Miraj also provides macros that
+                make page and component definitions look similar to
+                the <proj-snippet class="inline" clj>
+                                            <code class="clj">deftype</code>
+                                        </proj-snippet>
+                and <proj-snippet class="inline" clj>
+                                            <code class="clj">defrecord</code>
+                                        </proj-snippet>
+                constructions of Clojure.</p>
+                                    <p>Things get a little more complicated when you
+                add web components.  Miraj allows the programmer to
+                define and use Polymer-based components in idiomatic
+                Clojure, without having to worry about the directory
+                structures, file names, and href values required to
+                make the generated HTML, Javascript and CSS files work
+                together.</p>
+                                </paper-material>
+                                <paper-material elevation="1">
+                                    <p>Miraj is composed of several layers:</p>
+                                    <ul>
+                                        <li>The base layer is <a href="https://github.com/miraj-project/co-dom">miraj.co-dom</a>.  This library
+                     is derived from version 0.8.0 of <a href="https://github.com/clojure/data.xml">data.xml</a>. Miraj uses miraj.co-dom to build an XML tree
+                     representation of the HTML, which it then
+                     serializes to an HTML5 string.  For example:<proj-snippet class="inline" html>
+                                                <code class="html">&lt;span&gt;Hello, world!&lt;/span&gt;</code>
+                                            </proj-snippet> is represented by <proj-snippet class="inline" clj>
+                                                <code class="clj">#miraj.co_dom.Element{:tag :span, :attrs {}, :content ("Hello, world!")}</code>
+                                            </proj-snippet>.  Normally, the programmer will not need to use the co-dom library directly.</li>
+                                        <li>The <a href="html5">miraj.html</a> library
+                 is a wrapper around <code>miraj.co-dom</code>; it
+                 provides one Clojure function per HTML5 element
+                 tag.  For example, in a repl:<proj-snippet clj>
+                                                <code class="clj">index&gt; (def howdy (h/span "Hello, world!"))
+#'index/howdy
+index&gt; howdy
+#miraj.co_dom.Element{:tag :span, :attrs {}, :content ("Hello, world!")}</code>
+                                            </proj-snippet>This serializes
+                       to <proj-snippet class="inline" html>
+                                                <code class="html">&lt;span&gt;Hello, world!&lt;/span&gt;</code>
+                                            </proj-snippet>.</li>
+                                        <li>The <a href="miraj">miraj.core</a> library
+                 adds support for:<ul>
+                                                <li>A <proj-snippet class="inline" clj>
+                                                        <code class="clj">defpage</code>
+                                                    </proj-snippet>
+                        macro for defining HTML5 pages.</li>
+                                                <li>A <proj-snippet class="inline" clj>
+                                                        <code class="clj">defcomponent</code>
+                                                    </proj-snippet>
+                        macro for defining (Polymer) web components.</li>
+                                                <li>A <proj-snippet class="inline" clj>
+                                                        <code class="clj">deflibrary</code>
+                                                    </proj-snippet>
+                        macro for defining component libraries.</li>
+                                                <li>Functions for compiling and linking (i.e. serializing) Miraj structures.</li>
+                                            </ul>
+                                        </li>
+                                        <li>A collection of <a href="polymer">Polymer libraries</a> provides
+                 support for Polymer components.</li>
+                                        <li>
+                                            <a href="boot-miraj">boot-miraj</a>, a <a href="https://github.com/boot-clj/boot">boot</a>
+                 task library for Miraj programming.</li>
+                                    </ul>
+                                </paper-material>
                             </section>
                             <section tabindex="-1" data-route="html5">
                                 <h1 class="page-title">HTML5</h1>
+                                <p>The <a href="https://github.com/miraj-project/html">miraj.html</a>
+              library wraps the lower-level <a href="https://github.com/miraj-project/co-dom">miraj.co-dom</a>
+              library, providing one function per HTML5 element, as
+              well as some additional goodies.</p>
                                 <p>Assuming <proj-snippet class="inline" clj>
                                         <code class="clj">miraj.html</code>
                                     </proj-snippet>
@@ -157,14 +237,12 @@
                                         <code class="clj">h</code>
                                     </proj-snippet>:</p>
                                 <paper-material elevation="1">
-                                    <h3>Basics</h3>
+                                    <h3>Elements</h3>
                                     <ul>
                                         <li>
                                             <div>One function per HTML element:</div>
-                                            <proj-snippet clj>
+                                            <proj-snippet clj html>
                                                 <code class="clj">(h/div (h/span "Hello World"))</code>
-                                            </proj-snippet>
-                                            <proj-snippet html>
                                                 <code class="html">&lt;div&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/div&gt;</code>
                                             </proj-snippet>
                                         </li>
@@ -185,6 +263,51 @@
                                             <proj-snippet clj html>
                                                 <code class="clj">(h/script {:src "foo.js"})</code>
                                                 <code class="html">&lt;script src="foo.js"&gt;&lt;/script&gt;</code>
+                                            </proj-snippet>
+                                        </li>
+                                    </ul>
+                                </paper-material>
+                                <paper-material elevation="1">
+                                    <h3>Text Nodes</h3>
+                                    <ul>
+                                        <li>
+                                            <div>Escaping of &lt;angle brackets&gt; &amp; ampersands is handled automatically:</div>
+                                            <proj-snippet clj html>
+                                                <code class="clj">(h/span "Hello &amp; Goodbye, &lt;i&gt;World&lt;/i&gt;")</code>
+                                                <code class="html">&lt;span&gt;Hello &amp;amp; Goodbye, &amp;lt;i&amp;gt;World&amp;lt;/i&amp;gt;&lt;/span&gt;</code>
+                                            </proj-snippet>
+                                        </li>
+                                        <li>
+                                            <div>Embed double quotes must be escaped:</div>
+                                            <proj-snippet clj html>
+                                                <code class="clj">(h/span "Hello \"World\" ('Howdy')")</code>
+                                                <code class="html">&lt;span&gt;Hello "World" ('Howdy')&lt;/span&gt;</code>
+                                            </proj-snippet>
+                                        </li>
+                                        <li>
+                                            <div>You can split text nodes:</div>
+                                            <proj-snippet clj html>
+                                                <code class="clj">(h/span "Lorem ipsum dolor sit amet,"
+" consectetur adipiscing elit.")</code>
+                                                <code class="html">&lt;h/span&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/span&gt;</code>
+                                            </proj-snippet>
+                                        </li>
+                                        <li>
+                                            <div>You can use Clojure expressions:</div>
+                                            <proj-snippet clj html>
+                                                <code class="clj">(h/span "Lorem ipsum" (+ 2 3))</code>
+                                                <code class="html">&lt;h/span&gt;Lorem ipsum 6&lt;/span&gt;</code>
+                                            </proj-snippet>
+                                            <proj-snippet clj html>
+                                                <code class="clj">(h/span "Lorem " (clojure.string/join ", " (repeat 3 "ipsum")))</code>
+                                                <code class="html">&lt;h/span&gt;Lorem ipsum, ipsum, ipsum&lt;/span&gt;</code>
+                                            </proj-snippet>
+                                        </li>
+                                        <li>
+                                            <div>Inline elements are <i>easy</i>!</div>
+                                            <proj-snippet clj html>
+                                                <code class="clj">(h/span "Inline elemeents are " (h/i "easy") "!")</code>
+                                                <code class="html">&lt;h/span&gt;Inline elements are &lt;i&gt;easy&lt;/i&gt;!&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                     </ul>
@@ -329,50 +452,50 @@
                                 <paper-material elevation="1"></paper-material>
                             </section>
                             <section tabindex="-1" data-route="polymer">
-                                <h1 tabindex="-1" class="page-title">Polymer</h1>
+                                <h1 class="page-title">Polymer</h1>
                                 <paper-material elevation="1">
                                     <p>...examples..</p>
                                 </paper-material>
                             </section>
                             <section tabindex="-1" data-route="components">
-                                <h1 tabindex="-1" class="page-title">Custom Components</h1>
+                                <h1 class="page-title">Custom Components</h1>
                                 <paper-material elevation="1">
                                     <p>This is the components section</p>
                                 </paper-material>
                             </section>
                             <section tabindex="-1" data-route="libraries">
-                                <h1 tabindex="-1" class="page-title">Component Libraries</h1>
+                                <h1 class="page-title">Component Libraries</h1>
                                 <paper-material elevation="1">
                                     <p>This is the component libraries section</p>
                                 </paper-material>
                             </section>
                             <section tabindex="-1" data-route="dom">
-                                <h1 tabindex="-1" class="page-title">Dom</h1>
+                                <h1 class="page-title">Dom</h1>
                                 <paper-material elevation="1">
                                     <p>This is the dom section</p>
                                 </paper-material>
                             </section>
                             <section tabindex="-1" data-route="styling">
-                                <h1 tabindex="-1" class="page-title">Styling</h1>
+                                <h1 class="page-title">Styling</h1>
                                 <paper-material elevation="1">
                                     <p>foo</p>
                                 </paper-material>
                             </section>
                             <section tabindex="-1" data-route="boot-miraj">
-                                <h1 tabindex="-1" class="page-title">boot-miraj</h1>
+                                <h1 class="page-title">boot-miraj</h1>
                                 <paper-material elevation="1">
                                     <p>foo</p>
                                 </paper-material>
                             </section>
                             <section tabindex="-1" data-route="workflow">
                                 <paper-material elevation="1">
-                                    <h1 tabindex="-1" class="page-title">Workflow</h1>
+                                    <h1 class="page-title">Workflow</h1>
                                     <p>This is the workflow section</p>
                                 </paper-material>
                             </section>
                             <section tabindex="-1" data-route="roadmap">
                                 <paper-material elevation="1">
-                                    <h1 tabindex="-1" class="page-title">Status &amp;amp; Roadmap</h1>
+                                    <h1 class="page-title">Status &amp; Roadmap</h1>
                                     <p>This is the roadmap section</p>
                                 </paper-material>
                             </section>
