@@ -240,27 +240,27 @@ index&gt; howdy
                                     <h3>Elements</h3>
                                     <ul>
                                         <li>
-                                            <div>One function per HTML element:</div>
-                                            <proj-snippet clj html>
-                                                <code class="clj">(h/div (h/span "Hello World"))</code>
-                                                <code class="html">&lt;div&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/div&gt;</code>
-                                            </proj-snippet>
+                                            <div>One function per HTML element:  <proj-snippet class="inline" clj html>
+                                                    <code class="clj">(h/div (h/span "Hello World"))</code>
+                                                    <code class="html">&lt;div&gt;&lt;span&gt;Hello World&lt;/span&gt;&lt;/div&gt;</code>
+                                                </proj-snippet>
+                                            </div>
                                         </li>
                                         <li>
                                             <div>HTML5 <a href="https://www.w3.org/TR/html51/syntax.html#void-elements">void elements</a> cannot have any content; they also
                               cannot be "self-closing"; they may
                               only have a start tag with no '/'.
-                              Miraj understands void elements:</div>
-                                            <proj-snippet clj html>
-                                                <code class="clj">(h/br)</code>
-                                                <code class="html">&lt;br&gt;</code>
-                                            </proj-snippet>
+                              Miraj understands void elements:  <proj-snippet class="inline" clj html>
+                                                    <code class="clj">(h/br)</code>
+                                                    <code class="html">&lt;br&gt;</code>
+                                                </proj-snippet>
+                                            </div>
                                         </li>
                                         <li>
                                             <div>HTML5 empty elements must not be
                  self-closing; they must have a close tag.  Miraj
                  understands empty elements:</div>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/script {:src "foo.js"})</code>
                                                 <code class="html">&lt;script src="foo.js"&gt;&lt;/script&gt;</code>
                                             </proj-snippet>
@@ -272,14 +272,14 @@ index&gt; howdy
                                     <ul>
                                         <li>
                                             <div>Escaping of &lt;angle brackets&gt; &amp; ampersands is handled automatically:</div>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span "Hello &amp; Goodbye, &lt;i&gt;World&lt;/i&gt;")</code>
                                                 <code class="html">&lt;span&gt;Hello &amp;amp; Goodbye, &amp;lt;i&amp;gt;World&amp;lt;/i&amp;gt;&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
                                             <div>Embed double quotes must be escaped:</div>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span "Hello \"World\" ('Howdy')")</code>
                                                 <code class="html">&lt;span&gt;Hello "World" ('Howdy')&lt;/span&gt;</code>
                                             </proj-snippet>
@@ -290,14 +290,14 @@ index&gt; howdy
                               more info).  You can use the Unicode
                               character ﻿, 'ZERO WIDTH NO-BREAK
                               SPACE' to do this:</div>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span "Hello {\uFEFF{World}})</code>
                                                 <code class="html">&lt;span&gt;Hello {﻿{World}}&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
                                             <div>You can split text nodes:</div>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span "Lorem ipsum dolor sit amet,"
 " consectetur adipiscing elit.")</code>
                                                 <code class="html">&lt;h/span&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/span&gt;</code>
@@ -305,18 +305,18 @@ index&gt; howdy
                                         </li>
                                         <li>
                                             <div>You can use Clojure expressions:</div>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span "Lorem ipsum" (+ 2 3))</code>
                                                 <code class="html">&lt;h/span&gt;Lorem ipsum 6&lt;/span&gt;</code>
                                             </proj-snippet>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span "Lorem " (clojure.string/join ", " (repeat 3 "ipsum")))</code>
                                                 <code class="html">&lt;h/span&gt;Lorem ipsum, ipsum, ipsum&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
                                             <div>Inline elements are <i>easy</i>!</div>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span "Inline elemeents are " (h/i "easy") "!")</code>
                                                 <code class="html">&lt;h/span&gt;Inline elements are &lt;i&gt;easy&lt;/i&gt;!&lt;/span&gt;</code>
                                             </proj-snippet>
@@ -328,7 +328,7 @@ index&gt; howdy
                                     <ul>
                                         <li>
                                             <div>Attributes are passed as a keyword map:</div>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span {:class "foo"} "Hello World")</code>
                                                 <code class="html">&lt;span class="foo"&gt;Hello World&lt;/span&gt;</code>
                                             </proj-snippet>
@@ -338,14 +338,14 @@ index&gt; howdy
                  attribute values go through normal Clojure evaluation
                  and then are serialized as strings. You can use
                  expressions as attribute values:</div>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span {:foo (* 2 3)})</code>
                                                 <code class="html">&lt;span foo="6"&gt;&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
                                             <div>BigInt and BigDecimal end up looking like Int and Decimal:</div>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span {:foo 9N})</code>
                                                 <code class="html">&lt;span foo="9"&gt;&lt;/span&gt;</code>
                                             </proj-snippet>
@@ -358,25 +358,25 @@ index&gt; howdy
                                     <p>For id, class, and boolean attributes:</p>
                                     <ul>
                                         <li>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span :#foo "Hello World")</code>
                                                 <code class="html">&lt;span id="foo"&gt;Hello World&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span :.bar.baz "Hello World")</code>
                                                 <code class="html">&lt;span class="bar baz"&gt;Hello World&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span :?centered?horizontal "Hello World")</code>
                                                 <code class="html">&lt;span centered horizontal&gt;Hello World&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span :#foo.bar?centered "Hello World")</code>
                                                 <code class="html">&lt;span id="foo" class="bar" centered&gt;Hello World&lt;/span&gt;</code>
                                             </proj-snippet>
@@ -387,7 +387,7 @@ index&gt; howdy
                                         </proj-snippet> namespace:</p>
                                     <ul>
                                         <li>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span {:miraj.style/color "blue"} "Hello World")</code>
                                                 <code class="html">&lt;span style="color:blue;"&gt;Hello World&lt;/span&gt;</code>
                                             </proj-snippet>
@@ -399,7 +399,7 @@ index&gt; howdy
                                             <span>Hover: <span id="foobar"> Hello World</span>
                                                 <style>#foobar:hover {color:red}</style>
                                             </span>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span :#foo {:miraj.style/hover {:color "red"} "Hello World")</code>
                                                 <code class="html">&lt;span id="foo"&gt;Hello World&lt;/span&gt;&lt;style&gt;#foo:hover {color:red;}&lt;/style&gt;</code>
                                             </proj-snippet>
@@ -408,7 +408,7 @@ index&gt; howdy
                                             <span>using :before pseudo element:  <span id="beforeex">World</span>
                                                 <style>#beforeex:before {content:'Howdy, '}</style>
                                             </span>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span :#foo {:miraj.style/before {:content "Howdy, "} "World")</code>
                                                 <code class="html">&lt;span id="foo"&gt;World&lt;/span&gt;&lt;style&gt;#foo:before {content: "Howdy, "}&lt;/style&gt;</code>
                                             </proj-snippet>
@@ -501,25 +501,25 @@ index&gt; howdy
                                     <p>Miraj provides functions for Polymer bindings:</p>
                                     <ul>
                                         <li>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span {:foo (miraj.polymer/binding! :bar)}</code>
                                                 <code class="html">&lt;span foo="[﻿[bar]]"&gt;&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span {:foo (miraj.polymer/binding-attr! :bar)}</code>
                                                 <code class="html">&lt;span foo=$"[﻿[bar]]"&gt;&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span {:foo (miraj.polymer/binding!! :bar)}</code>
                                                 <code class="html">&lt;span foo="{﻿{bar}}"&gt;&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span {:foo (miraj.polymer/binding-attr!! :bar)}</code>
                                                 <code class="html">&lt;span foo=$"{﻿{bar}}"&gt;&lt;/span&gt;</code>
                                             </proj-snippet>
@@ -528,19 +528,19 @@ index&gt; howdy
                                     <p>Bindings also work in text nodes, and may be concatentated to text:</p>
                                     <ul>
                                         <li>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span (miraj.polymer/binding! :bar))</code>
                                                 <code class="html">&lt;span&gt;[﻿[bar]]&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span (str "Hello, " (miraj.polymer/binding! :name)))</code>
                                                 <code class="html">&lt;span&gt;Hello, [﻿[name]]&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
-                                            <proj-snippet clj html>
+                                            <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span {:foo (str (miraj.polymer/binding! :baseUrl) "users/bob")}</code>
                                                 <code class="html">&lt;span foo="[﻿[bar]]users/bob"&gt;&lt;/span&gt;</code>
                                             </proj-snippet>
