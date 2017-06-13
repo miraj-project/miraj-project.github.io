@@ -6,11 +6,11 @@ try{Polymer(cljs.core.clj__GT_js.call(null,new cljs.core.PersistentArrayMap(null
 var this$ = this;
 return proj.widgets.list.ready.call(null,this$);
 }),new cljs.core.Keyword(null,"observers","observers",841951845),cljs.core.PersistentVector.EMPTY,new cljs.core.Keyword(null,"listeners","listeners",394544445),null], null)));
-}catch (e57800){if((e57800 instanceof Error)){
-var e__69869__auto___57801 = e57800;
-cljs.core.println.call(null,"\"Caught exception on component registration:\"",e__69869__auto___57801);
+}catch (e80687){if((e80687 instanceof Error)){
+var e__69869__auto___80688 = e80687;
+cljs.core.println.call(null,"\"Caught exception on component registration:\"",e__69869__auto___80688);
 } else {
-throw e57800;
+throw e80687;
 
 }
 }
