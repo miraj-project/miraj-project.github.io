@@ -17,11 +17,9 @@ pre .atn, code .atn { color: var(--paper-green-800); } /* html/xml attribute nam
 pre .atv, code .atv { color: #65B042; } /* html/xml attribute value - green */
 pre .dec, code .dec { color: #3387CC; } /* decimal - blue */
 
+pre, pre.clj, pre.html {margin:0;padding:0;white-space:pre-wrap!important;}
 
-:host ::content code.clj,
-:host ::content code.html,
-:host ::content pre.clj,
-:host ::content pre.html {white-space:pre-wrap!important;}
+.prettyprint {vertical-align:top;}
 
 code.prettyprint.lang-clj,
 pre.prettyprint.lang-clj {
@@ -37,7 +35,7 @@ pre.prettyprint.lang-html  {
     border-radius: 8px;
     padding:2px;
     margin:0 4px 4px 0;
-    <!-- white-space: pre-wrap!important; -->
+    white-space: pre-wrap!important;
 }
 
 :host > div {padding: 4px 0 6px 0;}

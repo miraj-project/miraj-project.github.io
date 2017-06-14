@@ -148,41 +148,12 @@
                 components can be defined in the same project.</p>
                                 </paper-material>
                                 <paper-material elevation="1">
-                                    <p>Miraj treats the three "native" languages of
-                web development (HTML, Javascript, CSS) as a kind of
-                web "assembly" language.  The programmer defines
-                pages and components in Clojure (including
-                Clojurescript), which Miraj translates into HTML,
-                Javascript, and CSS.</p>
-                                    <p>Clojurescript already eliminates the need to
-                program in Javascript; Miraj does the same for
-                HTML.  (A genuine Clojure face for CSS programming
-                remains a future project).</p>
-                                    <p>Providing Clojure functions for HTML elements is
-                relatively trivial.  Miraj also provides macros that
-                make page and component definitions look similar to
-                the <proj-snippet class="inline" clj>
-                                            <code class="clj">deftype</code>
-                                        </proj-snippet>
-                and <proj-snippet class="inline" clj>
-                                            <code class="clj">defrecord</code>
-                                        </proj-snippet>
-                constructions of Clojure.</p>
-                                    <p>Things get a little more complicated when you
-                add web components.  Miraj allows the programmer to
-                define and use Polymer-based components in idiomatic
-                Clojure, without having to worry about the directory
-                structures, file names, and href values required to
-                make the generated HTML, Javascript and CSS files work
-                together.</p>
-                                </paper-material>
-                                <paper-material elevation="1">
                                     <p>Miraj is composed of several layers:</p>
                                     <ul>
                                         <li>The base layer is <a href="https://github.com/miraj-project/co-dom">miraj.co-dom</a>.  This library
                      is derived from version 0.8.0 of <a href="https://github.com/clojure/data.xml">data.xml</a>. Miraj uses miraj.co-dom to build an XML tree
                      representation of the HTML, which it then
-                     serializes to an HTML5 string.  For example:<proj-snippet class="inline" html>
+                     serializes to an HTML5 string.  For example,  <proj-snippet class="inline" html>
                                                 <code class="html">&lt;span&gt;Hello, world!&lt;/span&gt;</code>
                                             </proj-snippet> is represented by <proj-snippet class="inline" clj>
                                                 <code class="clj">#miraj.co_dom.Element{:tag :span, :attrs {}, :content ("Hello, world!")}</code>
@@ -265,6 +236,22 @@ index&gt; howdy
                                                 <code class="html">&lt;script src="foo.js"&gt;&lt;/script&gt;</code>
                                             </proj-snippet>
                                         </li>
+                                        <li>
+                                            <div>It's all functions; compose at will:</div>
+                                            <proj-snippet class="inline" clj html>
+                                                <code class="clj">(let [stooges ["Larry" "Moe" "Curly"]]
+  (h/ul (for [stooge stooges]
+    (h/li stooge))))</code>
+                                                <code class="html">&lt;ul&gt;&lt;li&gt;Larry&lt;/li&gt;
+  &lt;li&gt;Moe&lt;/li&gt;
+  &lt;li&gt;Curly&lt;/li&gt;&lt;/ul&gt;</code>
+                                            </proj-snippet>
+                                            <ul>
+                                                <li>Larry</li>
+                                                <li>Moe</li>
+                                                <li>Curly</li>
+                                            </ul>
+                                        </li>
                                     </ul>
                                 </paper-material>
                                 <paper-material elevation="1">
@@ -276,49 +263,86 @@ index&gt; howdy
                                                 <code class="clj">(h/span "Hello &amp; Goodbye, &lt;i&gt;World&lt;/i&gt;")</code>
                                                 <code class="html">&lt;span&gt;Hello &amp;amp; Goodbye, &amp;lt;i&amp;gt;World&amp;lt;/i&amp;gt;&lt;/span&gt;</code>
                                             </proj-snippet>
+                                            <div>Displays as: <proj-snippet class="inline" html>
+                                                    <code class="html">Hello &amp; Goodbye, &lt;i&gt;World&lt;/i&gt;</code>
+                                                </proj-snippet>
+                                            </div>
                                         </li>
                                         <li>
-                                            <div>Embed double quotes must be escaped:</div>
+                                            <div>Embedded double quotes must be escaped:</div>
                                             <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span "Hello \"World\" ('Howdy')")</code>
                                                 <code class="html">&lt;span&gt;Hello "World" ('Howdy')&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
-                                            <div>
-                                                <b>WARNING: </b>if you are using Polymer, you must escape opening double braces <code>{﻿{</code> and brackets <code>[﻿[</code> if you want to embed them in a string, since Polymer treats these as special "binding annotations" (see <a href="polymer">polymer</a> for
-                              more info).  You can use the Unicode
-                              character ﻿, 'ZERO WIDTH NO-BREAK
-                              SPACE' to do this:</div>
+                                            <div>Character entity references like &amp;euro;
+                 require special handling, since &amp; is automatically
+                 escaped.  Use the Unicode literal (for example,
+                 \u20AC for the Euro sign, €). You can embed
+                 character literals directly, or you can use ordinary
+                 Clojure definitions or bindings to get names:</div>
                                             <proj-snippet class="inline" clj html>
-                                                <code class="clj">(h/span "Hello {\uFEFF{World}})</code>
-                                                <code class="html">&lt;span&gt;Hello {﻿{World}}&lt;/span&gt;</code>
+                                                <code class="clj">(let [euro-sign "\u20AC"] (h/span "Hello, Euro: " euro-sign))</code>
+                                                <code class="html">&lt;span&gt;Hello, Euro: €&lt;/span&gt;</code>
                                             </proj-snippet>
+                                            <div>
+                                                <span>Displays as: <proj-snippet class="inline" html>
+                                                        <code class="html">Hello, Euro: €</code>
+                                                    </proj-snippet>
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <b>WARNING: </b>if you are using Polymer, you must escape opening double braces <code>{﻿{</code> and brackets <code>[﻿[</code> if you want to display them in a string, since Polymer treats these as special "binding annotations" (see <a href="polymer">polymer</a> for
+                              more info).  I.e. if you put something
+                              inside double braces or brackets, it will be interpreted as a property and will be displayed as null if it has no value:</div>
+                                            <span>
+                                                <proj-snippet class="inline" clj html>
+                                                    <code class="clj">(h/span "Hello {﻿{World}}")</code>
+                                                    <code class="html">&lt;span&gt;Hello {﻿{World}}&lt;/span&gt;</code>
+                                                </proj-snippet> displays as: <proj-snippet class="inline" html>
+                                                    <code class="html">Hello {{World}}</code>
+                                                </proj-snippet>
+                                            </span>
+                                            <div>Use the Unicode character \uFEFF,
+                              'ZERO WIDTH NO-BREAK SPACE', to force
+                              display of the delimiters without
+                              Polymer interpretation:</div>
+                                            <span>
+                                                <proj-snippet class="inline" clj html>
+                                                    <code class="clj">(h/span "Hello {\uFEFF{World}}")</code>
+                                                    <code class="html">&lt;span&gt;Hello {\uFEFF{World}}&lt;/span&gt;</code>
+                                                </proj-snippet> displays as: <proj-snippet class="inline" html>
+                                                    <code class="html">Hello {﻿{World}}</code>
+                                                </proj-snippet>
+                                            </span>
                                         </li>
                                         <li>
                                             <div>You can split text nodes:</div>
                                             <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span "Lorem ipsum dolor sit amet,"
 " consectetur adipiscing elit.")</code>
-                                                <code class="html">&lt;h/span&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/span&gt;</code>
+                                                <code class="html">&lt;span&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
                                             <div>You can use Clojure expressions:</div>
                                             <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span "Lorem ipsum" (+ 2 3))</code>
-                                                <code class="html">&lt;h/span&gt;Lorem ipsum 6&lt;/span&gt;</code>
+                                                <code class="html">&lt;span&gt;Lorem ipsum 6&lt;/span&gt;</code>
                                             </proj-snippet>
                                             <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span "Lorem " (clojure.string/join ", " (repeat 3 "ipsum")))</code>
-                                                <code class="html">&lt;h/span&gt;Lorem ipsum, ipsum, ipsum&lt;/span&gt;</code>
+                                                <code class="html">&lt;span&gt;Lorem ipsum, ipsum, ipsum&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
                                             <div>Inline elements are <i>easy</i>!</div>
                                             <proj-snippet class="inline" clj html>
                                                 <code class="clj">(h/span "Inline elemeents are " (h/i "easy") "!")</code>
-                                                <code class="html">&lt;h/span&gt;Inline elements are &lt;i&gt;easy&lt;/i&gt;!&lt;/span&gt;</code>
+                                                <code class="html">&lt;span&gt;Inline elements are &lt;i&gt;easy&lt;/i&gt;!&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                     </ul>
@@ -416,14 +440,35 @@ index&gt; howdy
                                     </ul>
                                 </paper-material>
                                 <paper-material elevation="1">
+                                    <h3>HTML Metadata</h3>
+                                    <p>Pass HTML metadata as a Clojure map; Miraj will
+                validate the map against Clojure.spec
+                specifications (which may be found in <a href="https://github.com/miraj-project/html/blob/master/src/main/clj/miraj/html_spec.clj">miraj.html</a>), and then transform it into the appropriate elements in &lt;head&gt;.</p>
+                                    <proj-snippet clj html>
+                                        <pre class="clj">#::h{:title "Page Title"
+     :description "Page description"
+     :charset "utf-8"
+     :viewport {::h/width :device-width
+                ::h/scale {::h/min 0.5 ::h/max 2 ::h/initial 1}
+                ::h/user-scalable true}}</pre>
+                                        <pre class="html">&lt;meta content="utf-8" name="charset"&gt;
+&lt;title&gt;Page Title&lt;/title&gt;
+&lt;meta content="Page description" name="description"&gt;
+&lt;meta content="width=device-width,
+               minimum-scale=0.5, maximum-scale=2, initial-scale=1,
+               user-scalable=yes"
+               name="viewport"&gt;</pre>
+                                    </proj-snippet>
+                                </paper-material>
+                            </section>
+                            <section tabindex="-1" data-route="miraj">
+                                <h1 class="page-title">Miraj</h1>
+                                <paper-material elevation="1">
                                     <h3>Pages</h3>
                                     <p>To define an index.html page,
                 use <proj-snippet class="inline" clj>
                                             <code class="clj">miraj.core/defpage</code>
-                                        </proj-snippet>.
-                Pass HTML metadata as a Clojure map; Miraj will
-                validate the map against Clojure.spec
-                specifications (which may be found in <a href="https://github.com/miraj-project/html/blob/master/src/main/clj/miraj/html_spec.clj">miraj.html</a>, and then transform it into the appropriate elements in &lt;head&gt;.</p>
+                                        </proj-snippet>.</p>
                                     <proj-snippet clj html>
                                         <pre class="clj">(ns index
   (:require [miraj.core :as miraj :refer [defpage]]
@@ -458,10 +503,6 @@ index&gt; howdy
                                     </proj-snippet>
                                 </paper-material>
                             </section>
-                            <section tabindex="-1" data-route="miraj">
-                                <h1 class="page-title">Miraj</h1>
-                                <paper-material elevation="1"></paper-material>
-                            </section>
                             <section tabindex="-1" data-route="polymer">
                                 <h1 class="page-title">Polymer</h1>
                                 <paper-material elevation="1">
@@ -471,7 +512,69 @@ index&gt; howdy
                   Event protocols.</p>
                                 </paper-material>
                                 <paper-material elevation="1">
-                                    <h4>Polymer Bindings</h4>
+                                    <h4>Polymer Component Libraries</h4>
+                                    <p>In addition, Miraj provides a collection of
+                  pre-built libraries for Polymer components.  These
+                  libraries wrap the native Polymer implementations,
+                  which can be found at <a href="https://www.webcomponents.org/">webcomponents.org</a>
+                                    </p>
+                                    <p>
+                                        <b>Warning: </b> only the iron and
+                  paper libraries are fully up to date; the remaining
+                  libraries are outdated, but will soon be upgraded.</p>
+                                    <ul>
+                                        <li>
+                                            <a href="https://github.com/miraj-project/polymer-iron">miraj.polymer.iron</a>  "Basic building blocks for creating an application."  (<a href="https://www.webcomponents.org/collection/PolymerElements/iron-elements">iron-elements</a>)</li>
+                                        <li>
+                                            <a href="https://github.com/miraj-project/polymer-paper">miraj.polymer.paper</a>  Material design UI elements. (<a href="https://www.webcomponents.org/collection/PolymerElements/paper-elements">paper-elements</a>)</li>
+                                        <li>
+                                            <a href="https://github.com/miraj-project/polymer-gold">miraj.polymer.gold</a>  "Elements built for e-commerce-specific use-cases, like checkout flows." (<a href="https://www.webcomponents.org/collection/PolymerElements/gold-elements">gold-elements</a>)</li>
+                                        <li>
+                                            <a href="">miraj.polymer.google</a>
+                                        </li>
+                                        <li>
+                                            <a href="">miraj.polymer.layout</a>
+                                        </li>
+                                        <li>
+                                            <a href="">miraj.polymer.molecules</a>
+                                        </li>
+                                        <li>
+                                            <a href="">miraj.polymer.neon</a>
+                                        </li>
+                                        <li>
+                                            <a href="">miraj.polymer.platinum</a>
+                                        </li>
+                                    </ul>
+                                </paper-material>
+                                <paper-material elevation="1">
+                                    <h4>Using Polymer Components</h4>
+                                    <p>To use a Polymer component in a webpage,
+                  include the library as a dependency in your
+                  boot/leiningen project file, and
+                  then <code>:require</code> it in your Clojure
+                  namespace, just like any other
+                  library: <proj-snippet clj>
+                                            <code class="clj">(ns foo.bar ...) (defpage baz (:require [miraj.polymer.paper :as paper :refer [button card]]) ...)</code>
+                                        </proj-snippet>
+                                    </p>
+                                    <p>See the Polymer <a href="https://github.com/miraj-project/demos/tree/master/hello-world/polymer">hello-world
+                  demo</a> for more detailed examples.</p>
+                                    <p>The Miraj names for the component functions do
+not always directly match the native names; for example, the function
+for &lt;paper-card&gt;
+is <code>miraj.polymer.paper/card</code>.  (Documentation is
+incomplete, but the library source code is easily understandable.)</p>
+                                    <h6>Data Binding Helper Elements</h6>
+                                    <p>Polymer's <a href="https://www.polymer-project.org/1.0/docs/devguide/templates">data
+                  binding helper elements</a> –&lt;dom-if&gt;,
+                  &lt;dom-repeat&gt;, etc. – are implemented
+                  in <code>miraj.polymer</code>.  Some of the names
+                  have been changed to be more consistent with Clojure
+                  practice; for example, for &lt;array-selector&gt; we use
+                  miraj.polymer/selection.  See the <a href="https://github.com/miraj-project/polymer/blob/master/src/main/clj/miraj/polymer.clj">source code</a> for the complete list.</p>
+                                </paper-material>
+                                <paper-material elevation="1">
+                                    <h5>Polymer Bindings</h5>
                                     <p>Polymer implements a <a href="https://www.polymer-project.org/1.0/docs/devguide/data-binding">data binding</a> mechanism that
                             "[C]onnects data from a custom
                             element (the host element) to a property
@@ -502,25 +605,25 @@ index&gt; howdy
                                     <ul>
                                         <li>
                                             <proj-snippet class="inline" clj html>
-                                                <code class="clj">(h/span {:foo (miraj.polymer/binding! :bar)}</code>
+                                                <code class="clj">(h/span {:foo (miraj.polymer/bind! :bar)}</code>
                                                 <code class="html">&lt;span foo="[﻿[bar]]"&gt;&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
                                             <proj-snippet class="inline" clj html>
-                                                <code class="clj">(h/span {:foo (miraj.polymer/binding-attr! :bar)}</code>
+                                                <code class="clj">(h/span {:foo (miraj.polymer/bind-attr! :bar)}</code>
                                                 <code class="html">&lt;span foo=$"[﻿[bar]]"&gt;&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
                                             <proj-snippet class="inline" clj html>
-                                                <code class="clj">(h/span {:foo (miraj.polymer/binding!! :bar)}</code>
+                                                <code class="clj">(h/span {:foo (miraj.polymer/bind!! :bar)}</code>
                                                 <code class="html">&lt;span foo="{﻿{bar}}"&gt;&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
                                             <proj-snippet class="inline" clj html>
-                                                <code class="clj">(h/span {:foo (miraj.polymer/binding-attr!! :bar)}</code>
+                                                <code class="clj">(h/span {:foo (miraj.polymer/bind-attr!! :bar)}</code>
                                                 <code class="html">&lt;span foo=$"{﻿{bar}}"&gt;&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
@@ -529,75 +632,21 @@ index&gt; howdy
                                     <ul>
                                         <li>
                                             <proj-snippet class="inline" clj html>
-                                                <code class="clj">(h/span (miraj.polymer/binding! :bar))</code>
+                                                <code class="clj">(h/span (miraj.polymer/bind! :bar))</code>
                                                 <code class="html">&lt;span&gt;[﻿[bar]]&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
                                             <proj-snippet class="inline" clj html>
-                                                <code class="clj">(h/span (str "Hello, " (miraj.polymer/binding! :name)))</code>
+                                                <code class="clj">(h/span (str "Hello, " (miraj.polymer/bind! :name)))</code>
                                                 <code class="html">&lt;span&gt;Hello, [﻿[name]]&lt;/span&gt;</code>
                                             </proj-snippet>
                                         </li>
                                         <li>
                                             <proj-snippet class="inline" clj html>
-                                                <code class="clj">(h/span {:foo (str (miraj.polymer/binding! :baseUrl) "users/bob")}</code>
-                                                <code class="html">&lt;span foo="[﻿[bar]]users/bob"&gt;&lt;/span&gt;</code>
+                                                <code class="clj">(h/span {:foo (str (miraj.polymer/bind! :baseUrl) "users/bob")}</code>
+                                                <code class="html">&lt;span foo="[﻿[baseUrl]]users/bob"&gt;&lt;/span&gt;</code>
                                             </proj-snippet>
-                                        </li>
-                                    </ul>
-                                </paper-material>
-                                <paper-material elevation="1">
-                                    <h4>Data Binding Helper Elements</h4>
-                                    <p>Polymer's <a href="https://www.polymer-project.org/1.0/docs/devguide/templates">Data
-                  binding helper elements</a> are implemented
-                  in <code>miraj.polymer</code>.  Some of the names
-                  have been changed to be more consistent with Clojure
-                  practice; for example, for &lt;array-selector&gt; we
-                  use miraj.polymer/selection.  See the <a href="https://github.com/miraj-project/polymer/blob/master/src/main/clj/miraj/polymer.clj">source code</a> for the complete list.</p>
-                                </paper-material>
-                                <paper-material elevation="1">
-                                    <h4>Polymer Component Libraries</h4>
-                                    <p>In addition, Miraj provides a collection of
-                  pre-built libraries for Polymer components.  These
-                  libraries wrap the native Polymer implementations,
-                  which can be found at <a href="https://www.webcomponents.org/">webcomponents.org</a>.  The Miraj names for the component functions do not always directly match the native names; for example, the function for &lt;paper-card&gt; is <code>miraj.polymer.paper/card</code>.  (Documentation is incomplete, but the library source code is easily understandable.)</p>
-                                    <p>To use a Polymer component in a webpage,
-                  include the library as a dependency in your
-                  boot/leiningen project file, and
-                  then <code>:require</code> it in your Clojure
-                  namespace, just like any other
-                  library: <proj-snippet clj>
-                                            <code class="clj">(ns foo.bar ...) (defpage baz (:require [miraj.polymer.paper :as paper :refer [button card]]) ...)</code>
-                                        </proj-snippet>
-                                    </p>
-                                    <p>See the Polymer <a href="https://github.com/miraj-project/demos/tree/master/hello-world/polymer">hello-world
-                  demo</a> for more detailed examples.</p>
-                                    <p>The provided libraries are the
-                  following. <b>Warning: </b> only the iron and
-                  paper libraries are fully up to date; the remaining
-                  libraries are outdated, but will soon be upgraded.</p>
-                                    <ul>
-                                        <li>
-                                            <a href="https://github.com/miraj-project/polymer-iron">miraj.polymer.iron</a>  "Basic building blocks for creating an application."  (<a href="https://www.webcomponents.org/collection/PolymerElements/iron-elements">iron-elements</a>)</li>
-                                        <li>
-                                            <a href="https://github.com/miraj-project/polymer-paper">miraj.polymer.paper</a>  Material design UI elements. (<a href="https://www.webcomponents.org/collection/PolymerElements/paper-elements">paper-elements</a>)</li>
-                                        <li>
-                                            <a href="https://github.com/miraj-project/polymer-gold">miraj.polymer.gold</a>  "Elements built for e-commerce-specific use-cases, like checkout flows." (<a href="https://www.webcomponents.org/collection/PolymerElements/gold-elements">gold-elements</a>)</li>
-                                        <li>
-                                            <a href="">miraj.polymer.google</a>
-                                        </li>
-                                        <li>
-                                            <a href="">miraj.polymer.layout</a>
-                                        </li>
-                                        <li>
-                                            <a href="">miraj.polymer.molecules</a>
-                                        </li>
-                                        <li>
-                                            <a href="">miraj.polymer.neon</a>
-                                        </li>
-                                        <li>
-                                            <a href="">miraj.polymer.platinum</a>
                                         </li>
                                     </ul>
                                 </paper-material>
