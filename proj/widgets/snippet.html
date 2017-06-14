@@ -17,12 +17,14 @@ pre .atn, code .atn { color: var(--paper-green-800); } /* html/xml attribute nam
 pre .atv, code .atv { color: #65B042; } /* html/xml attribute value - green */
 pre .dec, code .dec { color: #3387CC; } /* decimal - blue */
 
-pre, pre.clj, pre.html {margin:0;padding:0;white-space:pre-wrap!important;}
+:host ::content pre.prettyprint.lang-clj pre.clj,
+:host ::content pre.prettyprint.lang-html pre.html
+{margin:0;padding:0;white-space:pre-wrap!important;}
 
 .prettyprint {vertical-align:top;}
 
-code.prettyprint.lang-clj,
-pre.prettyprint.lang-clj {
+:host ::content code.prettyprint.lang-clj,
+:host ::content pre.prettyprint.lang-clj {
     background-color: var(--paper-amber-100)!important;
 }
 
@@ -31,7 +33,9 @@ pre.prettyprint.lang-html  {
     background-color: var(--paper-grey-300)!important;
 }
 
-.prettyprint, .prettyprint > code  {
+.prettyprint,
+.prettyprint > code,
+.prettyprint > pre {
     border-radius: 8px;
     padding:2px;
     margin:0 4px 4px 0;
