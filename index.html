@@ -4,17 +4,18 @@
                 web application development, including first-class
                 support for defining and using <a href="https://www.webcomponents.org/">Web
                 Components</a> (<a href="https://www.polymer-project.org/">Polymer</a>
-                only for this version).</p><p>Miraj is largely motivated by the following observations:</p><ul><li>HTML element tags are (co-)functions.  Like
+                only for this version).</p><p>Miraj is largely motivated by the following observations:</p><ul><li>The three languages of the web (HTML,
+                Javascript, CSS) together serve as a kind of web
+                "assembly" language.  Nobody wants to program in
+                assembly, let alone three different assembly
+                languages.</li><li>HTML element tags are (co-)functions.  Like
                  functions, they are applied to arguments (attributes
                  and child elements), and they always do the same
                  thing given the same input (and evaluation
                  environment).  The only difference is that functions
                  result in values, and HTML element co-functions
                  result in behavioral side-effects.</li><li><div>An HTML page is analogous to a Clojure program
-                 of one function, main.  In particular, the <proj-snippet class="inline" html><code class="html">&lt;link&gt;</code></proj-snippet> and <proj-snippet class="inline" html><code class="html">&lt;script&gt;</code></proj-snippet> elements in the <proj-snippet class="inline" html><code class="html">&lt;head&gt;</code></proj-snippet> element are analogous to the <proj-snippet class="inline" clj><code class="clj">:require</code></proj-snippet> and <proj-snippet class="inline" clj><code class="clj">:import</code></proj-snippet> directives of Clojure's <proj-snippet class="inline" clj><code class="clj">ns</code></proj-snippet> macro: they tell the runtime to find, fetch, and load the referenced resources.</div></li><li>The three languages of the web (HTML,
-                Javascript, CSS) together serve as a kind of web
-                "assembly" language.  Nobody programs in assembly,
-                let alone three different assembly languages.</li></ul><p>Miraj eliminates mixed-language programming,
+                 of one function, main.  In particular, the <proj-snippet class="inline" html><code class="html">&lt;link&gt;</code></proj-snippet> and <proj-snippet class="inline" html><code class="html">&lt;script&gt;</code></proj-snippet> elements in the <proj-snippet class="inline" html><code class="html">&lt;head&gt;</code></proj-snippet> element are analogous to the <proj-snippet class="inline" clj><code class="clj">:require</code></proj-snippet> and <proj-snippet class="inline" clj><code class="clj">:import</code></proj-snippet> directives of Clojure's <proj-snippet class="inline" clj><code class="clj">ns</code></proj-snippet> macro: they tell the runtime to find, fetch, and load the referenced resources.</div></li></ul><p>Miraj eliminates mixed-language programming,
                 allowing the programmer to define pages and
                 components in Clojure.  Miraj compiles this Clojure
                 code into HTML, Javascript, and CSS.</p></paper-material><paper-material elevation="1"><p>Clojurescript already eliminates the need to
@@ -162,13 +163,117 @@ incomplete, but the library source code is easily understandable.)</p><h6>Data B
                   in <code>miraj.polymer</code>.  Some of the names
                   have been changed to be more consistent with Clojure
                   practice; for example, for &lt;array-selector&gt; we use
-                  miraj.polymer/selection.  See the <a href="https://github.com/miraj-project/polymer/blob/master/src/main/clj/miraj/polymer.clj">source code</a> for the complete list.</p></paper-material><paper-material elevation="1"><h5>Polymer Bindings</h5><p>Polymer implements a <a href="https://www.polymer-project.org/1.0/docs/devguide/data-binding">data binding</a> mechanism that
+                  miraj.polymer/selection.  See the <a href="https://github.com/miraj-project/polymer/blob/master/src/main/clj/miraj/polymer.clj">source code</a> for the complete list.</p></paper-material><paper-material elevation="1"><h4>Polymer Bindings</h4><p>Polymer implements a <a href="https://www.polymer-project.org/1.0/docs/devguide/data-binding">data binding</a> mechanism that
                             "[C]onnects data from a custom
                             element (the host element) to a property
                             or attribute of an element in its local
                             DOM (the child or target element)." Miraj
                             provides idiomatic Clojure support for
-                            Polymer bindings.</p><p>Polymer "binding annotations" look like this:</p><ul><li>One-way property bindings use double square brackets: <proj-snippet class="inline" html><code class="html">&lt;my-element my-property="[﻿[hostProperty]]"&gt;</code></proj-snippet></li><li>One-way <i>attribute</i> bindings suffix $ to the attribute name: <proj-snippet class="inline" html><code class="html">&lt;my-element my-attribute$="[﻿[hostProperty]]"&gt;</code></proj-snippet></li><li>Two-way property bindings use double squiggle braces: <proj-snippet class="inline" html><code class="html">&lt;my-element my-property="{﻿{hostProperty}}"&gt;</code></proj-snippet></li><li>Two-way <i>attribute</i> bindings suffix $ to the attribute name: <proj-snippet class="inline" html><code class="html">&lt;my-element my-attribute$="{﻿{hostProperty}}"&gt;</code></proj-snippet></li></ul><p>Miraj provides functions for Polymer bindings:</p><ul><li><proj-snippet class="inline" clj html><code class="clj">(h/span {:foo (miraj.polymer/bind! :bar)}</code><code class="html">&lt;span foo="[﻿[bar]]"&gt;&lt;/span&gt;</code></proj-snippet></li><li><proj-snippet class="inline" clj html><code class="clj">(h/span {:foo (miraj.polymer/bind-attr! :bar)}</code><code class="html">&lt;span foo$="[﻿[bar]]"&gt;&lt;/span&gt;</code></proj-snippet></li><li><proj-snippet class="inline" clj html><code class="clj">(h/span {:foo (miraj.polymer/bind!! :bar)}</code><code class="html">&lt;span foo="{﻿{bar}}"&gt;&lt;/span&gt;</code></proj-snippet></li><li><proj-snippet class="inline" clj html><code class="clj">(h/span {:foo (miraj.polymer/bind-attr!! :bar)}</code><code class="html">&lt;span foo$="{﻿{bar}}"&gt;&lt;/span&gt;</code></proj-snippet></li></ul><p>Bindings also work in text nodes, and may be concatentated to text:</p><ul><li><proj-snippet class="inline" clj html><code class="clj">(h/span (miraj.polymer/bind! :bar))</code><code class="html">&lt;span&gt;[﻿[bar]]&lt;/span&gt;</code></proj-snippet></li><li><proj-snippet class="inline" clj html><code class="clj">(h/span (str "Hello, " (miraj.polymer/bind! :name)))</code><code class="html">&lt;span&gt;Hello, [﻿[name]]&lt;/span&gt;</code></proj-snippet></li><li><proj-snippet class="inline" clj html><code class="clj">(h/span {:foo (str (miraj.polymer/bind! :baseUrl) "users/bob")}</code><code class="html">&lt;span foo="[﻿[baseUrl]]users/bob"&gt;&lt;/span&gt;</code></proj-snippet></li></ul><p><a href="https://www.polymer-project.org/1.0/docs/devguide/data-binding#two-way-native">Two-way binding to a non-Polymer element</a>:  Polymer uses the following special syntax:  <proj-snippet class="inline" html><code class="html">target-prop="{﻿{hostProp::target-change-event}}"</code></proj-snippet>.  Miraj uses a more Clojure-like syntax; for example, to listen for 'input' events and  set hostValue to &lt;input&gt;.value: <proj-snippet clj html><code class="clj">(h/input {:value (miraj.polymer/bind!! :input-&gt;hostValue)})</code><code class="html">&lt;input value="{﻿{hostValue::input}}"&gt;</code></proj-snippet></p><msg-warning>Support for <a href="https://www.polymer-project.org/1.0/docs/devguide/data-binding#annotated-computed">computed bindings</a> is not fully implemented.</msg-warning></paper-material></section><section tabindex="-1" data-route="components"><h1 class="page-title">Custom Components</h1><paper-material elevation="1"><p>See the <a href="https://github.com/miraj-project/demos/tree/master/hello-world/acme-widgets">acme-widgets</a> demo for detailed examples.</p></paper-material></section><section tabindex="-1" data-route="libraries"><h1 class="page-title">Component Libraries</h1><paper-material elevation="1"><p>See the <a href="https://github.com/miraj-project/demos/tree/master/hello-world/acme-widgets">acme-widgets</a> demo for a detailed example.</p></paper-material></section><section tabindex="-1" data-route="dom"><h1 class="page-title">Dom</h1><paper-material elevation="1"><p>See <a href="https://www.polymer-project.org/1.0/docs/devguide/local-dom">Local DOM Basics and API</a>.  Miraj's <proj-snippet class="inline" clj><code class="clj">defcomponent</code></proj-snippet> hides the details of constructing a component's local DOM; see the <a href="https://github.com/miraj-project/demos/tree/master/hello-world/acme-widgets">acme-widgets</a> demo for examples.</p></paper-material></section><section tabindex="-1" data-route="styling"><h1 class="page-title">Styling</h1><paper-material elevation="1"><p>See <a href="https://www.polymer-project.org/1.0/docs/devguide/styling">Styling local DOM</a>.</p><p>To add styling to a component you have several options.</p><p>The recommended method is to create a css file
-                  named according to the component name.  For example, if your component is acme.sweetness/sweeter, then your CSS file should be acme/sweetness/sweeter.css.  Miraj will inject the CSS into the component definition.  Se the <a href="https://github.com/miraj-project/demos/tree/master/hello-world/acme-widgets">acme-widgets</a> demo for examples.</p><p>If you need to import external stylesheets, you can use the :css directive of defcomponent, or you can use an edn file, again named according to the component name - e.g. acme/sweetness/sweeter.edn.  See <a href="https://github.com/miraj-project/demos/blob/master/hello-world/miraj/src/clj/miraj/demos/hello_world/miraj/sweet.edn">hello_world/miraj/sweet.edn</a> for details on the syntax.</p></paper-material></section><section tabindex="-1" data-route="boot-miraj"><h1 class="page-title">boot-miraj</h1><paper-material elevation="1"><p>foo</p></paper-material></section><section tabindex="-1" data-route="workflow"><paper-material elevation="1"><h1 class="page-title">Workflow</h1><p>This is the workflow section</p></paper-material></section><section tabindex="-1" data-route="roadmap"><paper-material elevation="1"><h1 class="page-title">Status &amp; Roadmap</h1><p>This is the roadmap section</p></paper-material></section></iron-pages></div></paper-scroll-header-panel></paper-drawer-panel></template><paper-toast id="toast"><span role="button" tabindex="0" onclick="app.$.toast.hide()" class="toast-hide-button">Ok</span></paper-toast><script src="main.js"></script><script type="text/javascript" src="scripts/app.js"></script><script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=clj"></script><script>if (!window.HTMLImports) {
+                            Polymer bindings.</p><p>Polymer "binding annotations" look like this:</p><ul><li>One-way property bindings use double square brackets: <proj-snippet class="inline" html><code class="html">&lt;my-element my-property="[﻿[hostProperty]]"&gt;</code></proj-snippet></li><li>One-way <i>attribute</i> bindings suffix $ to the attribute name: <proj-snippet class="inline" html><code class="html">&lt;my-element my-attribute$="[﻿[hostProperty]]"&gt;</code></proj-snippet></li><li>Two-way property bindings use double squiggle braces: <proj-snippet class="inline" html><code class="html">&lt;my-element my-property="{﻿{hostProperty}}"&gt;</code></proj-snippet></li><li>Two-way <i>attribute</i> bindings suffix $ to the attribute name: <proj-snippet class="inline" html><code class="html">&lt;my-element my-attribute$="{﻿{hostProperty}}"&gt;</code></proj-snippet></li></ul><p>Miraj provides functions for Polymer bindings:</p><ul><li><proj-snippet class="inline" clj html><code class="clj">(h/span {:foo (miraj.polymer/bind! :bar)}</code><code class="html">&lt;span foo="[﻿[bar]]"&gt;&lt;/span&gt;</code></proj-snippet></li><li><proj-snippet class="inline" clj html><code class="clj">(h/span {:foo (miraj.polymer/bind-attr! :bar)}</code><code class="html">&lt;span foo$="[﻿[bar]]"&gt;&lt;/span&gt;</code></proj-snippet></li><li><proj-snippet class="inline" clj html><code class="clj">(h/span {:foo (miraj.polymer/bind!! :bar)}</code><code class="html">&lt;span foo="{﻿{bar}}"&gt;&lt;/span&gt;</code></proj-snippet></li><li><proj-snippet class="inline" clj html><code class="clj">(h/span {:foo (miraj.polymer/bind-attr!! :bar)}</code><code class="html">&lt;span foo$="{﻿{bar}}"&gt;&lt;/span&gt;</code></proj-snippet></li></ul><p>Bindings also work in text nodes, and may be concatentated to text:</p><ul><li><proj-snippet class="inline" clj html><code class="clj">(h/span (miraj.polymer/bind! :bar))</code><code class="html">&lt;span&gt;[﻿[bar]]&lt;/span&gt;</code></proj-snippet></li><li><proj-snippet class="inline" clj html><code class="clj">(h/span (str "Hello, " (miraj.polymer/bind! :name)))</code><code class="html">&lt;span&gt;Hello, [﻿[name]]&lt;/span&gt;</code></proj-snippet></li><li><proj-snippet class="inline" clj html><code class="clj">(h/span {:foo (str (miraj.polymer/bind! :baseUrl) "users/bob")}</code><code class="html">&lt;span foo="[﻿[baseUrl]]users/bob"&gt;&lt;/span&gt;</code></proj-snippet></li></ul><p><a href="https://www.polymer-project.org/1.0/docs/devguide/data-binding#two-way-native">Two-way binding to a non-Polymer element</a>:  Polymer uses the following special syntax:  <proj-snippet class="inline" html><code class="html">target-prop="{﻿{hostProp::target-change-event}}"</code></proj-snippet>.  Miraj uses a more Clojure-like syntax; for example, to listen for 'input' events and  set hostValue to &lt;input&gt;.value: <proj-snippet clj html><code class="clj">(h/input {:value (miraj.polymer/bind!! :input-&gt;hostValue)})</code><code class="html">&lt;input value="{﻿{hostValue::input}}"&gt;</code></proj-snippet></p><msg-warning>Support for <a href="https://www.polymer-project.org/1.0/docs/devguide/data-binding#annotated-computed">computed bindings</a> is not fully implemented.</msg-warning></paper-material></section><section tabindex="-1" data-route="components"><h1 class="page-title">Custom Components</h1><paper-material elevation="1"><p>Polymer custom components typically combine the following in a single HTML file:</p><ul><li>A blob of HTML to define the component's local DOM</li><li>A dash of CSS to style the component</li><li>Some Javascript to define the properties and methods of the component, and to register it at runtime</li><li>A collection of &lt;link&gt; elements to import external dependencies</li></ul><p>Note that all of this gets imported (loaded) in
+               one stroke, so the component will be registered as soon
+               as the HTML file is loaded.  But this is optional; the
+               HTML and CSS can be loaded separately from the
+               Javascript that registers the component.  This is the
+               strategy Miraj adopts.  The Miraj source code defining
+               a component is divided as follows:</p><ul><li>A Clojure file contains the defcomponent definition of the component's DOM, properties, and methods</li><li>A Clojurescript <i>delegate</i> namespaces contains functional implementations of the component's methods</li><li>The CSS for the component goes in a CSS file named according to the component</li><li>An EDN file specifies external dependencies</li></ul><p>These files must follow a strict naming
+               convention (this restriction may be relaxed in a future
+               release): the namespaace of the component is converted
+               into a path by interpreting each segment of the
+               namespace as a directory, and the name of the
+               component, suffixed by the appropriate extension, is
+               interpreted as the filename.  For example, the definition
+               of component <code>foo.bar/sweet</code> will use the following files: </p><proj-snippet clj><code class="clj">
+foo
+├── bar.clj          ;; contains defcomponent sweet
+├── bar              ;; organizes the optional implementation files
+│   ├── sweet.cljs   ;; delegate namespace
+│   ├── sweet.css    ;; styling specific to this component
+│   └── sweet.edn    ;; external resources</code></proj-snippet><p>Compiling and linking this component results in the following output:</p><proj-snippet clj><code class="clj">
+foo
+├── bar
+│   ├── sweet
+│   │   └── core.cljs  ;; generated code: registers component, delegates method calls to bar.sweet
+│   ├── sweet.cljs     ;; delegate ns
+│   ├── sweet.html     ;; templated local DOM plus CSS</code></proj-snippet><p>To use this component, a web page must import
+               sweet.html (via &lt;link rel="import"...&gt;), compile the
+               Clojurescript (along with any other clojurescript used
+               by the page) to main.js, and load the resulting
+               Javascript file.  Miraj handles all this
+               automatically, so long as you follow the conventions.</p><h3>defcomponent</h3><a>The <proj-snippet class="inline" clj><code class="clj">miraj.core/defcomponent</code></proj-snippet> macro has the following structure:</a><proj-snippet clj><code class="clj">
+(defcomponent sweet :html acme-sweet  ;; html tag can be anything, must have at least one dash '-'
+  "clojure docstring"
+  (:require  ...  just like :require for clojure.core/ns ...)
+  (:codom ... html code here ...)
+  {:polymer/properties  ...  }  ;; polymer prototype definition as clojure map
+  ;; callbacks, modeled by protocols:
+  miraj.polymer.protocols/Lifecycle
+  (created [] (sweet/created))   ;; delegate to delegate ns
+  miraj.html.protocols/Mouse
+  (click [e] (this-as this (sweet/click this e))))
+</code></proj-snippet><msg-important>Within defcomponent, Miraj aliases
+              the Clojurescript delegate namespace to the component
+              name; in this example, 'sweet' is the alias for
+              foo.bar.sweet (foo/bar/sweet.cljs)</msg-important><p>The prototype definition map is a little complex.  Here is an example; see the hello-world demos for more.  Polymer documentation at <a href="https://www.polymer-project.org/1.0/docs/devguide/properties">Declared properties</a> and <a href="https://www.polymer-project.org/1.0/docs/devguide/instance-methods">Instance methods</a>.</p><proj-snippet clj><code class="clj">
+  ;; properties defined in :polymer/properties are exposed as part of the
+  ;; public interface of the component
+  {:polymer/properties {:greeting ^String{:value "hello"
+                                          :type String
+                                          :observer (fn [new old] (sweet/observe-greeting new old))}}
+
+   ;; static html attributes on host (Polymer hostAttributes property)
+   ;; these will cause html attr vals to be set at create time
+   ;; see https://www.polymer-project.org/1.0/docs/devguide/registering-elements#host-attributes
+   :polymer/static {:string-attr1 "attr1"
+                    :boolean-attr2 true
+                    :foo "Hello"
+                    :tabindex 0}
+
+   ;; complex observers take (keyword) properties as params
+   ;; this will be fired whenever either property changes
+   ;; https://www.polymer-project.org/1.0/docs/devguide/observers#complex-observers
+   :greeting-flavor-observer (fn [:greeting :flavor]
+                               ;; delegate, passing the args as syms
+                               (sweet/greeting-flavor-observer greeting flavor))
+
+   ;; local properties - we can put them in the prototype, or in a cljs namespace
+   ;; for polymer data binding, properties must be public (defined in :polymer/properties)
+   :name {:last "Smith"
+          :first "John"}
+
+   ;; "instance" methods (https://www.polymer-project.org/1.0/docs/devguide/instance-methods)
+   ;; with javascript, instance methods go in the component's prototype
+   ;; with clojurescript, we don't need this - just use functions in the delegate namespace
+   :foo-bar (fn [evt] (this-as this (sweet/foo-bar this evt)))
+   }</code></proj-snippet><p>See the <a href="https://github.com/miraj-project/demos/tree/master/hello-world/acme-widgets">acme-widgets</a> demo for detailed examples of defining custom components.</p></paper-material></section><section tabindex="-1" data-route="libraries"><h1 class="page-title">Component Libraries</h1><paper-material elevation="1"><p>See the <a href="https://github.com/miraj-project/demos/tree/master/hello-world/acme-widgets">acme-widgets</a>
+                       demo for a detailed example of defining,
+                       compiling, and linking a custom component
+                       library.</p><p>You can also wrap 3rd party components into a
+                  library, just as Miraj does for Polymer Project
+                  components.  The easiest way to proceed is to copy
+                  one of the Miraj Polymer libraries and edit.
+                  Components are described in edn/webcomponents.edn.
+                  Run <proj-snippet class="inline" clj><code class="clj">(boot-miraj/compile :libraries true)</code></proj-snippet> to generate the library.</p></paper-material></section><section tabindex="-1" data-route="dom"><h1 class="page-title">Dom</h1><paper-material elevation="1"><p>See <a href="https://www.polymer-project.org/1.0/docs/devguide/local-dom">Local DOM Basics and API</a>.  Miraj's <proj-snippet class="inline" clj><code class="clj">defcomponent</code></proj-snippet> hides the details of constructing a component's local DOM; see the <a href="https://github.com/miraj-project/demos/tree/master/hello-world/acme-widgets">acme-widgets</a> demo for examples.</p></paper-material></section><section tabindex="-1" data-route="styling"><h1 class="page-title">Styling</h1><paper-material elevation="1"><p>See <a href="https://www.polymer-project.org/1.0/docs/devguide/styling">Styling local DOM</a>.</p><p>To add styling to a component you have several options.</p><p>The recommended method is to create a css file
+                  named according to the component name.  For example, if your component is acme.sweetness/sweeter, then your CSS file should be acme/sweetness/sweeter.css.  Miraj will inject the CSS into the component definition.  Se the <a href="https://github.com/miraj-project/demos/tree/master/hello-world/acme-widgets">acme-widgets</a> demo for examples.</p><p>If you need to import external stylesheets, you can use the :css directive of defcomponent, or you can use an edn file, again named according to the component name - e.g. acme/sweetness/sweeter.edn.  See <a href="https://github.com/miraj-project/demos/blob/master/hello-world/miraj/src/clj/miraj/demos/hello_world/miraj/sweet.edn">hello_world/miraj/sweet.edn</a> for details on the syntax.</p></paper-material></section><section tabindex="-1" data-route="boot-miraj"><h1 class="page-title">boot-miraj</h1><paper-material elevation="1"><p><a href="https://github.com/miraj-project/boot-miraj">boot-miraj</a> is a boot task collection for Miraj
+                       development.  In general you only need two
+                       tasks, compile and link.  See the <a href="https://github.com/miraj-project/demos/tree/master/hello-world">hello-world</a> demos for many examples.</p><p>To compile and link a library of components:</p><proj-snippet class="inline" clj><code class="clj">
+(deftask lib []
+  (comp
+   (miraj/compile :components #{}   ;; compile all namespaces
+                  ;; :components #{'foo.bar} ;; just this one ns
+                  ;; :components #{'foo.bar/baz} ;; just this one component
+                  :keep true        ;; keep (or discard) intermediate files
+                  :debug true)      ;; log msgs, pretty printed output,
+   (miraj/link :libraries #{'acme/widgets} ;; a deflibrary var
+               :debug true)))
+</code></proj-snippet><p>To compile and link a page:</p><proj-snippet class="inline" clj><code class="clj">
+(deftask app
+  (comp
+   (miraj/compile :pages #{'index}
+                  :polyfill :lite   ;; inject a Polymer polyfill
+                  :debug true)
+   (miraj/link :pages #{'index}
+               :debug true
+               )))
+</code></proj-snippet></paper-material></section><section tabindex="-1" data-route="workflow"><paper-material elevation="1"><h1 class="page-title">Workflow</h1><p>This is the workflow section</p></paper-material></section><section tabindex="-1" data-route="roadmap"><paper-material elevation="1"><h1 class="page-title">Status &amp; Roadmap</h1><p>This is the roadmap section</p></paper-material></section></iron-pages></div></paper-scroll-header-panel></paper-drawer-panel></template><paper-toast id="toast"><span role="button" tabindex="0" onclick="app.$.toast.hide()" class="toast-hide-button">Ok</span></paper-toast><script src="main.js"></script><script type="text/javascript" src="scripts/app.js"></script><script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=clj"></script><script>if (!window.HTMLImports) {
 	document.dispatchEvent(new CustomEvent('WebComponentsReady', {bubbles: true}));
 	}</script></body></html>
